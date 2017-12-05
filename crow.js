@@ -1,19 +1,13 @@
-(function(global, factory){
+(function(global){
 	"use strict";
 
 	var document = window.document;
 
-	Crow = function(selector, context){
-		return new Crow.fn.init(selector);
-	}
-
-	Crow.fn	= Crow.prototype = {
-
-		/* Init */
-		init: function(el){
-			if(!el) return this;
-			return document.querySelectorAll(el);
-		},
+    function Crow(el){
+        if(!el) return this;
+        return document.querySelectorAll(el);
+    }
+	Crow.prototype = {
 
 		/* Add Class */
 		addClass: function(class_){
@@ -36,6 +30,5 @@
 			return this.classList.remove(class_.split(" "));
 		}
 	};
-
-	Crow("body");
+    console.log(new Crow("body"));
 })(window);
