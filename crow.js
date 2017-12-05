@@ -1,34 +1,33 @@
-(function(global){
-	"use strict";
+(function(global, factory){
+    (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
+}(this, function(window){
+    var Crow            = (function(){
+        var document    = window.document,
+        crow            = {
+            /* Init */
+            init: function(el){
+                return document.querySelectorAll(el) || this;
+            },
 
-	var document = window.document;
+            /* Add Class */
+            addClass: function(class_){
+                this.classList.add(class_.split(" "));
+            },
 
-    function Crow(el){
-        if(!el) return this;
-        return document.querySelectorAll(el);
-    }
-	Crow.prototype = {
+            /* Toggle Class */
+            toggleClass: function(class_){
+                return this.classList.toggle(class_);
+            },
 
-		/* Add Class */
-		addClass: function(class_){
-			console.log(this);
-			this.classList.add(class_.split(" "));
-		},
+            /* Has Class */
+            hasClass: function(class_){
+                return this.classList.contains(class_);
+            },
 
-		/* Toggle Class */
-		toggleClass: function(class_){
-			return this.classList.toggle(class_);
-		},
-
-		/* Has Class */
-		hasClass: function(class_){
-			return this.classList.contains(class_);
-		},
-
-		/* Remove Class */
-		removeClass: function(class_){
-			return this.classList.remove(class_.split(" "));
-		}
-	};
-    console.log(new Crow("body"));
-})(window);
+            /* Remove Class */
+            removeClass: function(class_){
+                return this.classList.remove(class_.split(" "));
+            }
+        };
+    });
+}));
