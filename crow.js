@@ -6,11 +6,6 @@
         crow            = document.querySelectorAll(el) || this;
         crow.prototype  = {
 
-            /* Init */
-            init: function(el){
-                return document.querySelectorAll(el) || this;
-            },
-
             /* Add Class */
             addClass: function(class_){
                 this.classList.add(class_.split(" "));
@@ -35,5 +30,14 @@
         return crow;
     });
 
-    console.log(new Crow("body"));
+    Crow.ready = function(callback){
+        (/complete|loaded|interactive/.test(document.readyState) && document.body)? callback($):document.addEventListener('DOMContentLoaded', function(){ callback($) }, false);
+        return this;
+    }
+
+    window.Crow = Crow;
 }));
+
+Crow.ready(function(){
+    console.log(new Crow("body"));
+});
