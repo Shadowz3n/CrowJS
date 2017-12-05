@@ -1,9 +1,11 @@
 (function(global, factory){
     (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
 }(this, function(window){
-    var Crow            = (function(){
+    var Crow            = (function(el){
         var document    = window.document,
-        crow            = {
+        crow            = document.querySelectorAll(el) || this;
+        crow.prototype  = {
+
             /* Init */
             init: function(el){
                 return document.querySelectorAll(el) || this;
@@ -29,5 +31,9 @@
                 return this.classList.remove(class_.split(" "));
             }
         };
+
+        return crow;
     });
+
+    console.log(new Crow("body"));
 }));
