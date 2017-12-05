@@ -1,29 +1,29 @@
 (function(global, factory){
     (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
 }(this, function(window){
+    var document        = window.document;
     var Crow            = (function(el){
-        var document    = window.document,
-        crow            = document.querySelectorAll(el) || this;
-        crow.prototype  = {
-
-            /* Add Class */
+        crow            = [].slice.call(document.querySelectorAll(el)) || {};
+        crow.__proto__  = {
             addClass: function(class_){
-                this.classList.add(class_.split(" "));
+                [].forEach.call(crow, function(item){
+                    item.classList.add(class_.split(" "));
+                });
             },
-
-            /* Toggle Class */
             toggleClass: function(class_){
-                return this.classList.toggle(class_);
+                [].forEach.call(crow, function(item){
+                    item.classList.toggle(class_.split(" "));
+                });
             },
-
-            /* Has Class */
             hasClass: function(class_){
-                return this.classList.contains(class_);
+                return [].forEach.call(crow, function(item){
+                    item.classList.contains(class_.split(" "));
+                });
             },
-
-            /* Remove Class */
             removeClass: function(class_){
-                return this.classList.remove(class_.split(" "));
+                [].forEach.call(crow, function(item){
+                    item.classList.remove(class_.split(" "));
+                });
             }
         };
         return crow;
