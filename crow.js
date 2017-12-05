@@ -26,18 +26,13 @@
                 return this.classList.remove(class_.split(" "));
             }
         };
-
         return crow;
     });
 
     Crow.ready = function(callback){
-        (/complete|loaded|interactive/.test(document.readyState) && document.body)? callback($):document.addEventListener('DOMContentLoaded', function(){ callback($) }, false);
+        (/complete|loaded|interactive/.test(document.readyState) && document.body)? callback(Crow.ready):document.addEventListener('DOMContentLoaded', function(){callback(Crow.ready)}, false);
         return this;
     }
 
     window.Crow = Crow;
 }));
-
-Crow.ready(function(){
-    console.log(new Crow("body"));
-});
