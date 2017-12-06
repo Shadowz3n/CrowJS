@@ -30,6 +30,20 @@
                 });
                 return crow;
             },
+            html: function(html){
+                var thisHtml    = '';
+                [].forEach.call(crow, function(item){
+                    if(html) item.innerHTML = html;
+                    thisHtml = item.innerHTML;
+                });
+                return thisHtml;
+            },
+            append: function(html){
+                [].forEach.call(crow, function(item){
+                    if(html) item.innerHTML += html;
+                });
+                return crow;
+            }
         };
         return crow;
     });
@@ -41,11 +55,11 @@
 
     Crow.ajax   = function(options){
         var xhr = new XMLHttpRequest();
-        if(options.url){
+        if(options && options.url){
             xhr.open((options.type? options.type:'GET'), options.url);
             xhr.onload = function(){
                 if(xhr.status===200){
-
+                    
                 }
             }
             if(options.dataType) xhr.responseType = options.dataType;
