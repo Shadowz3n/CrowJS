@@ -36,7 +36,7 @@
                     if(html) item.innerHTML = html;
                     thisHtml = item.innerHTML;
                 });
-                return thisHtml;
+                return html? crow:thisHtml;
             },
             append: function(html){
                 [].forEach.call(crow, function(item){
