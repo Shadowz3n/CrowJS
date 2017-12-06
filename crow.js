@@ -33,9 +33,31 @@
         };
         return crow;
     });
+
     Crow.ready = function(callback){
         (/complete|loaded|interactive/.test(document.readyState) && document.body)? callback(Crow.ready):document.addEventListener('DOMContentLoaded', function(){callback(Crow.ready)}, false);
         return this;
     }
+
+    Crow.ajax   = function(options){
+        var xhr = new XMLHttpRequest();
+        if(options.url){
+            xhr.open((options.type? options.type:'GET'), options.url);
+            xhr.onload = function(){
+                if(xhr.status===200){
+
+                }
+            }
+            if(options.dataType) xhr.responseType = options.dataType;
+            if(options.headers){
+                for(var i in options.headers){
+                    xhr.setRequestHeader(i, options.headers[i]);
+                }
+            }
+            xhr.send((options.data? encodeURI(options.data):null));
+        }
+        return xhr;
+    }
+
     window.Crow = Crow;
 }));
