@@ -43,6 +43,12 @@
                     if(html) item.innerHTML += html;
                 });
                 return crow;
+            },
+            prepend: function(html){
+                [].forEach.call(crow, function(item){
+                    if(html) item.innerHTML = html+item.innerHTML;
+                });
+                return crow;
             }
         };
         return crow;
