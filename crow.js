@@ -50,8 +50,17 @@
                 });
                 return crow;
             },
-            done: function(){
-                return (this instanceof window.XMLHttpRequest)? this.responseText:this;
+            after: function(html){
+                [].forEach.call(crow, function(item){
+                    if(html) item.parentNode.insertBefore((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html, item.nextSibling);
+                });
+                return crow;
+            },
+            before: function(html){
+                [].forEach.call(crow, function(item){
+                    if(html) item.parentNode.insertBefore((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html, item);
+                });
+                return crow;
             }
         };
         return crow;
@@ -83,10 +92,13 @@
                     xhr.setRequestHeader(i, options.headers[i]);
                 }
             }
-            xhr.percent = function(){
+            xhr.__proto__.percent = function(){
                 return (xhr instanceof window.XMLHttpRequest)? xhr.addEventListener('porcentagem', this.progress, false):true;
                 return (xhr.upload)? xhr.upload.addEventListener('porcentagem', this.progress, false):true;
                 return xhr;
+            }
+            xhr.__proto__.done    = function(){
+                return (this instanceof window.XMLHttpRequest)? this.responseText:this;
             }
             xhr.send((options.data? encodeURI(options.data):null));
         }
