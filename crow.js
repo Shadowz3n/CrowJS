@@ -40,25 +40,31 @@
             },
             append: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.appendChild((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html);
+                    if(html) item.appendChild(Crow.createElementFromString(html));
                 });
                 return crow;
             },
             prepend: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.insertBefore((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html, item.firstChild);
+                    if(html) item.insertBefore(Crow.createElementFromString(html), item.firstChild);
                 });
                 return crow;
             },
             after: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.parentNode.insertBefore((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html, item.nextSibling);
+                    if(html) item.parentNode.insertBefore(Crow.createElementFromString(html), item.nextSibling);
                 });
                 return crow;
             },
             before: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.parentNode.insertBefore((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html, item);
+                    if(html) item.parentNode.insertBefore(Crow.createElementFromString(html), item);
+                });
+                return crow;
+            },
+            click: function(func){
+                [].forEach.call(crow, function(item){
+                    item.addEventListener("click", func);
                 });
                 return crow;
             }
