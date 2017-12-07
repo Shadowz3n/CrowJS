@@ -83,6 +83,11 @@
                     xhr.setRequestHeader(i, options.headers[i]);
                 }
             }
+            xhr.percent = function(){
+                return (xhr instanceof window.XMLHttpRequest)? xhr.addEventListener('porcentagem', this.progress, false):true;
+                return (xhr.upload)? xhr.upload.addEventListener('porcentagem', this.progress, false):true;
+                return xhr;
+            }
             xhr.send((options.data? encodeURI(options.data):null));
         }
         return xhr;
