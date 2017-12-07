@@ -3,7 +3,7 @@
 }(this, function(window){
     var document        = window.document;
     var Crow            = (function(el){
-        crow            = (/^<.*?>$/.test(el))? Crow.createElementFromString(el):[].slice.call(document.querySelectorAll(el));
+        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(el))? [].slice.call(document.querySelectorAll(el)):Crow.createElementFromString(el);
         crow.__proto__  = {
             addClass: function(class_){
                 [].forEach.call(crow, function(item){
