@@ -40,13 +40,13 @@
             },
             append: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.appendChild(Crow.createElementFromString(html));
+                    if(html) item.appendChild((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html);
                 });
                 return crow;
             },
             prepend: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.insertBefore(Crow.createElementFromString(html), item.firstChild);
+                    if(html) item.insertBefore((/^<.*?>$/.test(el))? Crow.createElementFromString(html):html, item.firstChild);
                 });
                 return crow;
             },
