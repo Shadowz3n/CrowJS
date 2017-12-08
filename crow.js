@@ -3,7 +3,7 @@
 }(this, function(window){
     var document        = window.document;
     var Crow            = (function(el){
-        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(el))? [].slice.call(document.querySelectorAll(el)):Crow.createElementFromString(el);
+        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):Crow.createElementFromString(el);
         crow.__proto__  = {
             addClass: function(class_){
                 [].forEach.call(crow, function(item){
@@ -40,13 +40,13 @@
             },
             append: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.appendChild(Crow.createElementFromString(html));
+                    if(html) item.appendChild((html instanceof Object)? html:Crow.createElementFromString(html));
                 });
                 return crow;
             },
             prepend: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.insertBefore(Crow.createElementFromString(html), item.firstChild);
+                    if(html) item.insertBefore((html instanceof Object)? html:Crow.createElementFromString(html), item.firstChild);
                 });
                 return crow;
             },
@@ -78,8 +78,8 @@
     }
 
     Crow.createElementFromString = function(str){
-        const element = new DOMParser().parseFromString(str, 'text/html');
-        const child = element.documentElement.querySelector('body').firstChild;
+        element = new DOMParser().parseFromString(str, 'text/html');
+        child = element.documentElement.querySelector('body').firstChild;
         return child;
     }
 
