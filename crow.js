@@ -3,7 +3,7 @@
 }(this, function(window){
     var document        = window.document;
     var Crow            = (function(el){
-        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):Crow.createElementFromString(el);
+        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)) && !(el instanceof Object))? [].slice.call(document.querySelectorAll(el)):Crow.createElementFromString(el);
         crow.__proto__  = {
             addClass: function(class_){
                 [].forEach.call(crow, function(item){
@@ -62,10 +62,19 @@
                 });
                 return crow;
             },
+            closest: function(selector){
+                var el = HTMLElement.prototype;
+                var matches = el.matches||el.webkitMatchesSelector||el.mozMatchesSelector||el.msMatchesSelector;
+                return function closest(el, selector){
+                    return matches.call(el, selector)? el:closest(el.parentElement, selector);
+                };
+            },
             click: function(func){
-                [].forEach.call(crow, function(item){
-                    item.addEventListener("click", func);
-                });
+                document.addEventListener("click", function(event){
+                    [].forEach.call(crow, function(item){
+                        if(event.target==item) func();
+                    });
+                }, false);
                 return crow;
             }
         };
