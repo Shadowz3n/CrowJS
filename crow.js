@@ -52,20 +52,20 @@
             },
             after: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.parentNode.insertBefore(Crow.createElementFromString(html), item.nextSibling);
+                    if(html) item.parentNode.insertBefore((html instanceof Object)? html:Crow.createElementFromString(html), item.nextSibling);
                 });
                 return crow;
             },
             before: function(html){
                 [].forEach.call(crow, function(item){
-                    if(html) item.parentNode.insertBefore(Crow.createElementFromString(html), item);
+                    if(html) item.parentNode.insertBefore((html instanceof Object)? html:Crow.createElementFromString(html), item);
                 });
                 return crow;
             },
             closest: function(selector){
                 var closests    = [];
                 [].forEach.call(crow, function(item){
-                    if(item.closest(selector)) closests.push(item.closest(selector));
+                    (selector)? closests.push(item.closest(selector)):closests.push(item.parentNode);
                 });
                 return closests.length>0? closests:crow;
             },
