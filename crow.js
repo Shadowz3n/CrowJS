@@ -63,16 +63,16 @@
                 return crow;
             },
             closest: function(selector){
-                var el = HTMLElement.prototype;
-                var matches = el.matches||el.webkitMatchesSelector||el.mozMatchesSelector||el.msMatchesSelector;
-                return function closest(el, selector){
-                    return matches.call(el, selector)? el:closest(el.parentElement, selector);
-                };
+                var closests    = [];
+                [].forEach.call(crow, function(item){
+                    if(item.closest(selector)) closests.push(item.closest(selector));
+                });
+                return closests.length>0? closests:crow;
             },
             click: function(func){
-                document.addEventListener("click", function(event){
+                document.addEventListener("click", function(e){
                     [].forEach.call(crow, function(item){
-                        if(event.target==item) func();
+                        if(e.target==item || e.target.parentNode==item) func();
                     });
                 }, false);
                 return crow;
@@ -87,9 +87,7 @@
     }
 
     Crow.createElementFromString = function(str){
-        element = new DOMParser().parseFromString(str, 'text/html');
-        child = element.documentElement.querySelector('body').firstChild;
-        return child;
+        return new DOMParser().parseFromString(str, 'text/html').documentElement.querySelector('body').firstChild;
     }
 
     Crow.ajax   = (function(options){
