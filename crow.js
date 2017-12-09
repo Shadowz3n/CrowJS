@@ -65,7 +65,7 @@
             find: function(selector){
             	var finds    = [];
                 [].forEach.call(crow, function(item){
-                	finds.push([].slice.call(crow.querySelectorAll(selector)));
+                	finds.push([].slice.call(item.querySelectorAll(selector)));
                 });
                 return finds;
             },
@@ -75,6 +75,18 @@
                     (selector)? closests.push(item.closest(selector)):closests.push(item.parentNode);
                 });
                 return closests;
+            },
+            show: function(){
+            	[].forEach.call(crow, function(item){
+            		item.style.display	= "";
+                });
+                return crow;
+            },
+            hide: function(){
+            	[].forEach.call(crow, function(item){
+            		item.style.display	= "none";
+                });
+                return crow;
             },
             click: function(func){
                 document.addEventListener("click", function(e){
@@ -101,7 +113,7 @@
         var xhr = new XMLHttpRequest();
         if(options && options.url){
             xhr.open((options.type? options.type:'GET'), options.url);
-            if options.type=="POST"
+            if options.type=="POST" xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             xhr.onload = function(){
                 if(xhr.status===200){
                     xhr.data    = xhr.responseText;
