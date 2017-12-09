@@ -62,12 +62,19 @@
                 });
                 return crow;
             },
+            find: function(selector){
+            	var finds    = [];
+                [].forEach.call(crow, function(item){
+                	finds.push([].slice.call(crow.querySelectorAll(selector)));
+                });
+                return finds;
+            },
             closest: function(selector){
                 var closests    = [];
                 [].forEach.call(crow, function(item){
                     (selector)? closests.push(item.closest(selector)):closests.push(item.parentNode);
                 });
-                return closests.length>0? closests:crow;
+                return closests;
             },
             click: function(func){
                 document.addEventListener("click", function(e){
@@ -94,6 +101,7 @@
         var xhr = new XMLHttpRequest();
         if(options && options.url){
             xhr.open((options.type? options.type:'GET'), options.url);
+            if options.type=="POST"
             xhr.onload = function(){
                 if(xhr.status===200){
                     xhr.data    = xhr.responseText;
