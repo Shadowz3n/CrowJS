@@ -24,7 +24,7 @@
                 return crow;
             },
             hasClass: function(class_){
-            	var hasClass  class_.split(" "), hasClassVal = false;
+            	var hasClass = class_.split(" "), hasClassVal = false;
             	for(var i=0;i<hasClass.length;i++){
             		[].forEach.call(crow, function(item){
             			hasClass    = item.classList.contains(toToggle[i])? true:hasClass;
