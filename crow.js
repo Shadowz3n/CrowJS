@@ -3,7 +3,7 @@
 }(this, function(window){
     var document        = window.document;
     var Crow            = (function(el){
-        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)) && !(el instanceof Object))? [].slice.call(document.querySelectorAll(el)):Crow.createElementFromString(el);
+        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)) && !(el instanceof Object))? [].slice.call(document.querySelectorAll(el)):[].slice.call(Crow.createElementFromString(el));
         crow.__proto__  = {
             addClass: function(class_){
                 [].forEach.call(crow, function(item){
@@ -113,7 +113,7 @@
         var xhr = new XMLHttpRequest();
         if(options && options.url){
             xhr.open((options.type? options.type:'GET'), options.url);
-            if options.type=="POST" xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             xhr.onload = function(){
                 if(xhr.status===200){
                     xhr.data    = xhr.responseText;
