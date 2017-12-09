@@ -6,28 +6,39 @@
         crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)) && !(el instanceof Object))? [].slice.call(document.querySelectorAll(el)):[].slice.call(Crow.createElementFromString(el));
         crow.__proto__  = {
             addClass: function(class_){
-                [].forEach.call(crow, function(item){
-                    item.classList.add(class_.split(" "));
-                });
+            	var toAdd	= class_.split(" ");
+            	for(var i=0;i<toAdd.length;i++){
+            		[].forEach.call(crow, function(item){
+	                    item.classList.add(toAdd[i]);
+	                });
+            	}
                 return crow;
             },
             toggleClass: function(class_){
-                [].forEach.call(crow, function(item){
-                    item.classList.toggle(class_.split(" "));
-                });
+            	var toToggle	= class_.split(" ");
+            	for(var i=0;i<toToggle.length;i++){
+            		[].forEach.call(crow, function(item){
+	                    item.classList.toggle(toToggle[i]);
+	                });
+            	}
                 return crow;
             },
             hasClass: function(class_){
-                var hasClass    = false;
-                [].forEach.call(crow, function(item){
-                    hasClass    = item.classList.contains(class_.split(" "))? true:hasClass;
-                });
-                return hasClass;
+            	var hasClass	= class_.split(" "), var hasClassVal    = false;
+            	for(var i=0;i<hasClass.length;i++){
+            		[].forEach.call(crow, function(item){
+            			hasClass    = item.classList.contains(toToggle[i])? true:hasClass;
+	                });
+            	}
+                return hasClassVal;
             },
             removeClass: function(class_){
-                [].forEach.call(crow, function(item){
-                    item.classList.remove(class_.split(" "));
-                });
+            	var toRm	= class_.split(" ");
+            	for(var i=0;i<toRm.length;i++){
+            		[].forEach.call(crow, function(item){
+	                    item.classList.remove(toRm[i]);
+	                });
+            	}
                 return crow;
             },
             html: function(html){
