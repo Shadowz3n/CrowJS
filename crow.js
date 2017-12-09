@@ -78,7 +78,7 @@
                 [].forEach.call(crow, function(item){
                 	finds.push([].slice.call(item.querySelectorAll(selector)));
                 });
-                return finds;
+                return finds[0];
             },
             closest: function(selector){
                 var closests    = [];
