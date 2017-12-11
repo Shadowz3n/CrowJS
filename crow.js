@@ -77,15 +77,31 @@
                 return crow;
             },
             after: function(html){
-                [].forEach.call(crow, function(item){
-                    if(html) item.parentNode.insertBefore((html instanceof Object)? html:Crow.createElementFromString(html), item.nextSibling);
-                });
+                if(html){
+                    [].forEach.call(crow, function(item){
+                        if(html instanceof Object){
+                            [].forEach.call(html, function(item_){
+                                item.parentNode.insertBefore(item_, item.nextSibling);
+                            });
+                        }else{
+                            item.parentNode.insertBefore(Crow.createElementFromString(html), item.nextSibling);
+                        }
+                    });
+                }
                 return crow;
             },
             before: function(html){
-                [].forEach.call(crow, function(item){
-                    if(html) item.parentNode.insertBefore((html instanceof Object)? html:Crow.createElementFromString(html), item);
-                });
+                if(html){
+                    [].forEach.call(crow, function(item){
+                        if(html instanceof Object){
+                            [].forEach.call(html, function(item_){
+                                item.parentNode.insertBefore(item_, item);
+                            });
+                        }else{
+                            item.parentNode.insertBefore(Crow.createElementFromString(html), item);
+                        }
+                    });
+                }
                 return crow;
             },
             find: function(selector){
