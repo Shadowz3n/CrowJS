@@ -1,7 +1,7 @@
     (function(global, factory){
         (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
     }(this, function(window){
-        var document        = window.document;
+        var document        = window.document, body = document.body;
         var Crow            = (function(el){
             crow            = (el instanceof Object)? el:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
             crow.__proto__  = {
@@ -124,7 +124,7 @@
         }
 
         Crow.createElementFromString = function(str){
-            return new DOMParser().parseFromString(str, 'text/html').documentElement.querySelector('body').firstChild;
+            return new DOMParser().parseFromString("<object>"+str+"</object>", 'text/html').body.firstChild;
         }
 
         Crow.ajax   = (function(options){
