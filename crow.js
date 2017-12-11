@@ -3,42 +3,42 @@
 }(this, function(window){
     var document        = window.document;
     var Crow            = (function(el){
-        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)) && !(el instanceof Object))? [].slice.call(document.querySelectorAll(el)):[].slice.call(Crow.createElementFromString(el));
+        crow            = (!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)) && !(el instanceof Object))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
         crow.__proto__  = {
             addClass: function(class_){
-            	var toAdd	= class_.split(" ");
-            	for(var i=0;i<toAdd.length;i++){
-            		[].forEach.call(crow, function(item){
-	                    item.classList.add(toAdd[i]);
-	                });
-            	}
+                var toAdd   = class_.split(" ");
+                for(var i=0;i<toAdd.length;i++){
+                    [].forEach.call(crow, function(item){
+                        if(item.className.indexOf(toAdd[i])== -1) item.className += " "+toAdd[i];
+                    });
+                }
                 return crow;
             },
             toggleClass: function(class_){
-            	var toToggle	= class_.split(" ");
-            	for(var i=0;i<toToggle.length;i++){
-            		[].forEach.call(crow, function(item){
-	                    item.classList.toggle(toToggle[i]);
-	                });
-            	}
+                var toToggle    = class_.split(" ");
+                for(var i=0;i<toToggle.length;i++){
+                    [].forEach.call(crow, function(item){
+                        item.className = item.className.match(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'))? item.className.replace(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'), ''):item.className+" "+toToggle[i];
+                    });
+                }
                 return crow;
             },
             hasClass: function(class_){
-            	var hasClass = class_.split(" "), hasClassVal = false;
-            	for(var i=0;i<hasClass.length;i++){
-            		[].forEach.call(crow, function(item){
-            			hasClass    = item.classList.contains(toToggle[i])? true:hasClass;
-	                });
-            	}
+                var hasClass = class_.split(" "), hasClassVal = false;
+                for(var i=0;i<hasClass.length;i++){
+                    [].forEach.call(crow, function(item){
+                        hasClassVal    = item.className.match(new RegExp('(\\s|^)'+hasClass[i]+'(\\s|$)'))? true:hasClassVal;
+                    });
+                }
                 return hasClassVal;
             },
             removeClass: function(class_){
-            	var toRm	= class_.split(" ");
-            	for(var i=0;i<toRm.length;i++){
-            		[].forEach.call(crow, function(item){
-	                    item.classList.remove(toRm[i]);
-	                });
-            	}
+                var toRm    = class_.split(" ");
+                for(var i=0;i<toRm.length;i++){
+                    [].forEach.call(crow, function(item){
+                        if(item.className.match(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'))) item.className = item.className.replace(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'), '');
+                    });
+                }
                 return crow;
             },
             html: function(html){
@@ -50,9 +50,17 @@
                 return html? crow:thisHtml;
             },
             append: function(html){
-                [].forEach.call(crow, function(item){
-                    if(html) item.appendChild((html instanceof Object)? html:Crow.createElementFromString(html));
-                });
+                if(html){
+                    [].forEach.call(crow, function(item){
+                        if(html instanceof Object){
+                            [].forEach.call(html, function(item_){
+                                item.appendChild(item_);
+                            });
+                        }else{
+                            item.appendChild(Crow.createElementFromString(html));
+                        }
+                    });
+                }
                 return crow;
             },
             prepend: function(html){
@@ -74,9 +82,9 @@
                 return crow;
             },
             find: function(selector){
-            	var finds    = [];
+                var finds    = [];
                 [].forEach.call(crow, function(item){
-                	finds.push([].slice.call(item.querySelectorAll(selector)));
+                    finds.push([].slice.call(item.querySelectorAll(selector)));
                 });
                 return finds[0];
             },
@@ -88,14 +96,14 @@
                 return closests;
             },
             show: function(){
-            	[].forEach.call(crow, function(item){
-            		item.style.display	= "";
+                [].forEach.call(crow, function(item){
+                    item.style.display  = "";
                 });
                 return crow;
             },
             hide: function(){
-            	[].forEach.call(crow, function(item){
-            		item.style.display	= "none";
+                [].forEach.call(crow, function(item){
+                    item.style.display  = "none";
                 });
                 return crow;
             },
