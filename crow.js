@@ -51,13 +51,7 @@
                 append: function(html){
                     if(html){
                         [].forEach.call(crow, function(item){
-                            if(html instanceof Object){
-                                [].forEach.call(html, function(item_){
-                                    item.appendChild(item_);
-                                });
-                            }else{
-                                item.appendChild(Crow.createElementFromString(html));
-                            }
+                            (html instanceof Object)? [].forEach.call(html, function(item_){ item.appendChild(item_); }):item.appendChild(Crow.createElementFromString(html));
                         });
                     }
                     return crow;
@@ -65,13 +59,7 @@
                 prepend: function(html){
                     if(html){
                         [].forEach.call(crow, function(item){
-                            if(html instanceof Object){
-                                [].forEach.call(html, function(item_){
-                                    item.insertBefore(item_, item.firstChild);
-                                });
-                            }else{
-                                item.insertBefore(Crow.createElementFromString(html), item.firstChild);
-                            }
+                            (html instanceof Object)? [].forEach.call(html, function(item_){ item.insertBefore(item_, item.firstChild); }):item.insertBefore(Crow.createElementFromString(html), item.firstChild);
                         });
                     }
                     return crow;
@@ -79,13 +67,7 @@
                 after: function(html){
                     if(html){
                         [].forEach.call(crow, function(item){
-                            if(html instanceof Object){
-                                [].forEach.call(html, function(item_){
-                                    item.parentNode.insertBefore(item_, item.nextSibling);
-                                });
-                            }else{
-                                item.parentNode.insertBefore(Crow.createElementFromString(html), item.nextSibling);
-                            }
+                            (html instanceof Object)? [].forEach.call(html, function(item_){ item.parentNode.insertBefore(item_, item.nextSibling); }):item.parentNode.insertBefore(Crow.createElementFromString(html), item.nextSibling);
                         });
                     }
                     return crow;
@@ -93,13 +75,7 @@
                 before: function(html){
                     if(html){
                         [].forEach.call(crow, function(item){
-                            if(html instanceof Object){
-                                [].forEach.call(html, function(item_){
-                                    item.parentNode.insertBefore(item_, item);
-                                });
-                            }else{
-                                item.parentNode.insertBefore(Crow.createElementFromString(html), item);
-                            }
+                            (html instanceof Object)? [].forEach.call(html, function(item_){ item.parentNode.insertBefore(item_, item); }):item.parentNode.insertBefore(Crow.createElementFromString(html), item);
                         });
                     }
                     return crow;
