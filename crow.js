@@ -45,9 +45,8 @@
                 var thisHtml    = '';
                 [].forEach.call(crow, function(item){
                     if(html) item.innerHTML = html;
-                    thisHtml = item.innerHTML;
                 });
-                return html? crow:thisHtml;
+                return html? crow:crow[crow.length-1].innerHTML;
             },
             append: function(html){
                 if(html){
@@ -64,9 +63,17 @@
                 return crow;
             },
             prepend: function(html){
-                [].forEach.call(crow, function(item){
-                    if(html) item.insertBefore((html instanceof Object)? html:Crow.createElementFromString(html), item.firstChild);
-                });
+                if(html){
+                    [].forEach.call(crow, function(item){
+                        if(html instanceof Object){
+                            [].forEach.call(html, function(item_){
+                                item.insertBefore(item_, item.firstChild);
+                            });
+                        }else{
+                            item.insertBefore(Crow.createElementFromString(html), item.firstChild);
+                        }
+                    });
+                }
                 return crow;
             },
             after: function(html){
