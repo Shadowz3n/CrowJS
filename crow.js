@@ -9,7 +9,7 @@
                     var toAdd   = class_.split(" ");
                     for(var i=0;i<toAdd.length;i++){
                         [].forEach.call(crow, function(item){
-                            if(item.className.indexOf(toAdd[i])== -1) item.className += " "+toAdd[i];
+                            if(item.className.indexOf(toAdd[i])== -1) item.className = (item.className+" "+toAdd[i]).replace(/^\s+|\s+$/g,'');
                         });
                     }
                     return crow;
