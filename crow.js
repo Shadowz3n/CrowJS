@@ -83,16 +83,16 @@
                 find: function(selector){
                     var finds    = [];
                     [].forEach.call(crow, function(item){
-                        finds.push([].slice.call(item.querySelectorAll(selector)));
+                        finds.push(item.querySelectorAll(selector));
                     });
-                    return finds[0];
+                    return Crow(finds[0]);
                 },
                 closest: function(selector){
                     var closests    = [];
                     [].forEach.call(crow, function(item){
                         (selector)? closests.push(item.closest(selector)):closests.push(item.parentNode);
                     });
-                    return closests;
+                    return Crow(closests);
                 },
                 show: function(){
                     [].forEach.call(crow, function(item){
