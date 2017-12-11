@@ -83,7 +83,7 @@
                 find: function(selector){
                     var finds    = [];
                     [].forEach.call(crow, function(item){
-                        finds.push(item.querySelectorAll(selector));
+                        finds.push([].slice.call(item.querySelectorAll(selector)));
                     });
                     return Crow(finds[0]);
                 },
