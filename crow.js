@@ -135,7 +135,7 @@
                 if(func){
                     [].forEach.call(this, function(item){
                         document.addEventListener(action, function(e){
-                            return e.target===item? func(e):false;
+                            return (e.target===item || e.target.parentNode===item || e.target.parentNode.parentNode===item || e.target.parentNode.parentNode.parentNode===item)? func(e):false;
                         });
                     });
                 }else{ [].forEach.call(this, function(item){ item[action](); }); }
