@@ -1,14 +1,7 @@
 (function(global, factory){
     (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
 }(this, function(window){
-    var closest = (function(){
-        var el = HTMLElement.prototype;
-        var matches = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
-        return function closest(el, selector){
-            var nSelector = (selector.className || selector.id || selector.nodeName);
-            return (nSelector)? matches.call(el, nSelector)? el:closest(el.parentElement, nSelector):el;
-        };
-    })();
+    if(!HTMLElement.prototype.matches) HTMLElement.prototype.matches = HTMLElement.prototype.webkitMatchesSelector || HTMLElement.prototype.mozMatchesSelector || HTMLElement.prototype.msMatchesSelector
     var document        = window.document, body = document.body;
     var Crow            = (function(el){
         crow            = (el instanceof Object)? el:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
@@ -131,13 +124,12 @@
                 return ifCheck;
             }
         };
-        ['focus', 'blur', 'mouseover', 'click', 'submit'].forEach(function(action){
+        ['focus', 'blur', 'mouseover', 'mouseout', 'click', 'submit'].forEach(function(action){
             crow.__proto__[action] = function(func){
                 if(func){
                     [].forEach.call(this, function(item){
                         document.addEventListener(action, function(e){
-                            var listeningTarget = closest(e.target, item);
-                            if(listeningTarget) func.call(listeningTarget, e);
+                            return e.target===item? func(e):false;
                         });
                     });
                 }else{ [].forEach.call(this, function(item){ item[action](); }); }
