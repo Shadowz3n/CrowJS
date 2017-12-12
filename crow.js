@@ -93,9 +93,7 @@
             	return (this instanceof Object)? [].forEach.call(this, function(item_){ item_.parentNode.removeChild(item_); }):this.parentNode.removeChild(this);
             },
             attr: function(attr){
-            	if(attr){
-					(this instanceof Object)? [].forEach.call(this, function(item_){ for(var i in attr){ item_.setAttribute(i, attr[i]); } }):(function(){ for(var i in attr){ item_.setAttribute(i, attr[i]); } });
-				}
+            	if(attr) (this instanceof Object)? [].forEach.call(this, function(item_){ for(var i in attr){ item_.setAttribute(i, attr[i]); } }):(function(){ for(var i in attr){ item_.setAttribute(i, attr[i]); } });
             	return this;
             },
             find: function(selector){
@@ -121,6 +119,18 @@
             hide: function(){
                 [].forEach.call(this, function(item){
                     item.style.display  = "none";
+                });
+                return this;
+            },
+            focus: function(){
+            	[].forEach.call(this, function(item){
+                    item.focus();
+                });
+                return this;
+            },
+            blur: function(){
+            	[].forEach.call(this, function(item){
+                    item.blur();
                 });
                 return this;
             },
@@ -169,9 +179,6 @@
             xhr.__proto__.done    = function(){
                 return (this instanceof window.XMLHttpRequest)? this.responseText:this;
             }
-
-            console.log(encodeURIComponent(JSON.stringify(options.data)));
-
             xhr.send((options.data? encodeURIComponent(JSON.stringify(options.data)):null));
         }
         return xhr;
