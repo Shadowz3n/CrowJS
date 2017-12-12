@@ -4,8 +4,7 @@
 	if(!Element.prototype.matches) Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 	if(!Element.prototype.closest){
 		Element.prototype.closest = function(s){
-			var el = this;
-			if(!document.documentElement.contains(el)) return null;
+			var el = this; if(!document.documentElement.contains(el)) return null;
 			do{ if(el.matches(s)) return el; el = el.parentElement; }while(el!==null);
 			return null;
 		};
@@ -107,16 +106,13 @@
                 return Crow(closests);
             },
             show: function(){
-                [].forEach.call(this, function(item){ item.style.display  = ""; });
-                return this;
+                [].forEach.call(this, function(item){ item.style.display  = ""; }); return this;
             },
             hide: function(){
-                [].forEach.call(this, function(item){ item.style.display  = "none"; });
-                return this;
+                [].forEach.call(this, function(item){ item.style.display  = "none"; }); return this;
             },
             eq: function(eq){
-            	console.log(this[eq]);
-            	return (eq && (eq>=0 || eq<=this.length-1))? this[eq]:this;
+            	return (parseFloat(eq)>=0 || parseFloat(eq)<=this.length-1)? this[eq]:this;
             },
             width: function(newW){
             	if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
@@ -159,16 +155,12 @@
         };
         return crow;
     });
-
     Crow.ready = function(callback){
-        (/complete|loaded|interactive/.test(document.readyState) && document.body)? callback(Crow.ready):document.addEventListener('DOMContentLoaded', function(){callback(Crow.ready)}, false);
-        return this;
+        (/complete|loaded|interactive/.test(document.readyState) && document.body)? callback(Crow.ready):document.addEventListener('DOMContentLoaded', function(){callback(Crow.ready)}, false); return this;
     }
-
     Crow.createElementFromString = function(str){
         return new DOMParser().parseFromString(str, 'text/html').body.firstChild;
     }
-
     Crow.ajax   = (function(options){
         var xhr = new XMLHttpRequest();
         if(options && options.url){
@@ -197,6 +189,5 @@
         }
         return xhr;
     });
-
     window.Crow = Crow;
 }));
