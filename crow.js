@@ -124,7 +124,7 @@
             height: function(newH){
             	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
                 return newH? this[this.length-1].style.height:this;
-            }
+            },
             focus: function(){
             	[].forEach.call(this, function(item){ item.focus(); });
                 return this;
