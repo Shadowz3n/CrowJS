@@ -116,11 +116,11 @@
             },
             width: function(newW){
             	if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
-                return newW? this:Number(this[this.length-1].style.width.replace("px","").replace("vw","").replace("vh",""));
+                return newW? this:this[this.length-1].offsetWidth;
             },
             height: function(newH){
             	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
-                return newH? this:Number(this[this.length-1].style.height.replace("px","").replace("vw","").replace("vh",""));
+                return newH? this:this[this.length-1].offsetHeight;
             },
             focus: function(func=false){
             	if(func){
