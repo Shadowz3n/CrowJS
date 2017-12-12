@@ -52,9 +52,7 @@
             },
             html: function(html){
                 var thisHtml    = '';
-                [].forEach.call(crow, function(item){
-                    if(html) item.innerHTML = html;
-                });
+                [].forEach.call(crow, function(item){ if(html) item.innerHTML = html; });
                 return html? this:this[this.length-1].innerHTML;
             },
             append: function(html){
@@ -98,9 +96,7 @@
             },
             find: function(selector){
                 var finds    = [];
-                [].forEach.call(this, function(item){
-                    finds.push([].slice.call(item.querySelectorAll(selector)));
-                });
+                [].forEach.call(this, function(item){ finds.push([].slice.call(item.querySelectorAll(selector))); });
                 return Crow(finds[0]);
             },
             closest: function(selector){
@@ -111,27 +107,30 @@
                 return Crow(closests);
             },
             show: function(){
-                [].forEach.call(this, function(item){
-                    item.style.display  = "";
-                });
+                [].forEach.call(this, function(item){ item.style.display  = ""; });
                 return this;
             },
             hide: function(){
-                [].forEach.call(this, function(item){
-                    item.style.display  = "none";
-                });
+                [].forEach.call(this, function(item){ item.style.display  = "none"; });
                 return this;
             },
+            eq: function(eq){
+            	return eq && eq>=0 && eq<=this.length-1? Crow(this[eq]):this;
+            },
+            width: function(newW){
+            	if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
+                return newW? this[this.length-1].style.width:this;
+            },
+            height: function(newH){
+            	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
+                return newH? this[this.length-1].style.height:this;
+            }
             focus: function(){
-            	[].forEach.call(this, function(item){
-                    item.focus();
-                });
+            	[].forEach.call(this, function(item){ item.focus(); });
                 return this;
             },
             blur: function(){
-            	[].forEach.call(this, function(item){
-                    item.blur();
-                });
+            	[].forEach.call(this, function(item){ item.blur(); });
                 return this;
             },
             click: function(func){
