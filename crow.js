@@ -1,6 +1,15 @@
 (function(global, factory){
     (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
 }(this, function(window){
+	if(!Element.prototype.matches) Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+	if(!Element.prototype.closest){
+		Element.prototype.closest = function(s){
+			var el = this;
+			if(!document.documentElement.contains(el)) return null;
+			do{ if(el.matches(s)) return el; el = el.parentElement; }while(el!==null);
+			return null;
+		};
+	}
     var document        = window.document, body = document.body;
     var Crow            = (function(el){
         crow            = (el instanceof Object)? el:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
@@ -80,6 +89,15 @@
                 }
                 return this;
             },
+            remove: function(){
+            	return (this instanceof Object)? [].forEach.call(this, function(item_){ item_.parentNode.removeChild(item_); }):this.parentNode.removeChild(this);
+            },
+            attr: function(attr){
+            	if(attr){
+					(this instanceof Object)? [].forEach.call(this, function(item_){ for(var i in attr){ item_.setAttribute(i, attr[i]); } }):(function(){ for(var i in attr){ item_.setAttribute(i, attr[i]); } });
+				}
+            	return this;
+            },
             find: function(selector){
                 var finds    = [];
                 [].forEach.call(this, function(item){
@@ -151,7 +169,10 @@
             xhr.__proto__.done    = function(){
                 return (this instanceof window.XMLHttpRequest)? this.responseText:this;
             }
-            xhr.send((options.data? encodeURI(options.data):null));
+
+            console.log(encodeURIComponent(JSON.stringify(options.data)));
+
+            xhr.send((options.data? encodeURIComponent(JSON.stringify(options.data)):null));
         }
         return xhr;
     });
