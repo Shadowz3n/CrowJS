@@ -122,31 +122,31 @@
             	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
                 return newH? this:Number(this[this.length-1].style.height.replace("px","").replace("vw","").replace("vh",""));
             },
-            focus: function(func){
+            focus: function(func=false){
             	if(func){
 	                document.addEventListener("focus", function(e){
 	                    [].forEach.call(this, function(item){
-	                        if(e.target==item || e.target.parentNode==item) func();
+	                        if(e.target==item || e.target.parentNode==item) func(e);
 	                    });
 	                }, false);
 	            }else{ [].forEach.call(this, function(item){ item.focus(); }); }
                 return this;
             },
-            blur: function(func){
+            blur: function(func=false){
             	if(func){
 	                document.addEventListener("blur", function(e){
 	                    [].forEach.call(this, function(item){
-	                        if(e.target==item || e.target.parentNode==item) func();
+	                        if(e.target==item || e.target.parentNode==item) func(e);
 	                    });
 	                }, false);
 	            }else{ [].forEach.call(this, function(item){ item.blur(); }); }
                 return this;
             },
-            click: function(func){
+            click: function(func=false){
             	if(func){
 	                document.addEventListener("click", function(e){
 	                    [].forEach.call(this, function(item){
-	                        if(e.target==item || e.target.parentNode==item) func();
+	                        if(e.target==item || e.target.parentNode==item) func(e);
 	                    });
 	                }, false);
 	            }else{ [].forEach.call(this, function(item){ item.click(); }); }
