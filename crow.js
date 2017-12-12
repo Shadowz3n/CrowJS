@@ -133,12 +133,12 @@
                 this.addEventListener('error', func);
             }
         };
-        ['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'click', 'submit'].forEach(function(action){
+        ['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'mousemove', 'click', 'submit'].forEach(function(action){
             crow.__proto__[action] = function(func){
                 if(func){
                     [].forEach.call(this, function(item){
                         document.addEventListener(action, function(e){
-                            return (e.target===item || e.target.parentNode===item || e.target.parentNode.parentNode===item || e.target.parentNode.parentNode.parentNode===item)? func(e):false;
+                            return (e.target===item || (e.target.parentNode && e.target.parentNode===item))? func(e):false;
                         });
                     });
                 }else{ [].forEach.call(this, function(item){ item[action](); }); }
