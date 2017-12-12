@@ -115,30 +115,45 @@
                 return this;
             },
             eq: function(eq){
-            	return eq && eq>=0 && eq<=this.length-1? Crow(this[eq]):this;
+            	console.log(this[eq]);
+            	return (eq && (eq>=0 || eq<=this.length-1))? this[eq]:this;
             },
             width: function(newW){
             	if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
-                return newW? this[this.length-1].style.width:this;
+                return newW? this:this[this.length-1].style.width;
             },
             height: function(newH){
             	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
-                return newH? this[this.length-1].style.height:this;
+                return newH? this:this[this.length-1].style.height;
             },
-            focus: function(){
-            	[].forEach.call(this, function(item){ item.focus(); });
+            focus: function(func){
+            	if(func){
+	                document.addEventListener("focus", function(e){
+	                    [].forEach.call(this, function(item){
+	                        if(e.target==item || e.target.parentNode==item) func();
+	                    });
+	                }, false);
+	            }else{ [].forEach.call(this, function(item){ item.focus(); }); }
                 return this;
             },
-            blur: function(){
-            	[].forEach.call(this, function(item){ item.blur(); });
+            blur: function(func){
+            	if(func){
+	                document.addEventListener("blur", function(e){
+	                    [].forEach.call(this, function(item){
+	                        if(e.target==item || e.target.parentNode==item) func();
+	                    });
+	                }, false);
+	            }else{ [].forEach.call(this, function(item){ item.blur(); }); }
                 return this;
             },
             click: function(func){
-                document.addEventListener("click", function(e){
-                    [].forEach.call(this, function(item){
-                        if(e.target==item || e.target.parentNode==item) func();
-                    });
-                }, false);
+            	if(func){
+	                document.addEventListener("click", function(e){
+	                    [].forEach.call(this, function(item){
+	                        if(e.target==item || e.target.parentNode==item) func();
+	                    });
+	                }, false);
+	            }else{ [].forEach.call(this, function(item){ item.click(); }); }
                 return this;
             }
         };
