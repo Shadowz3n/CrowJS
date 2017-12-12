@@ -132,21 +132,23 @@
             },
             focus: function(func=false){
             	if(func){
-	                document.addEventListener("focus", function(e){
-	                    [].forEach.call(this, function(item){
-	                        if(e.target==item || e.target.parentNode==item) func(e);
-	                    });
-	                }, false);
+                    [].forEach.call(this, function(item){
+                    	document.addEventListener("focus", function(e){
+							var listeningTarget = closest(e.target, item);
+							if(listeningTarget) func.call(listeningTarget, e);
+						});
+                    });
 	            }else{ [].forEach.call(this, function(item){ item.focus(); }); }
                 return this;
             },
             blur: function(func=false){
             	if(func){
-	                document.addEventListener("blur", function(e){
-	                    [].forEach.call(this, function(item){
-	                        if(e.target==item || e.target.parentNode==item) func(e);
-	                    });
-	                }, false);
+                    [].forEach.call(this, function(item){
+                    	document.addEventListener("blur", function(e){
+							var listeningTarget = closest(e.target, item);
+							if(listeningTarget) func.call(listeningTarget, e);
+						});
+                    });
 	            }else{ [].forEach.call(this, function(item){ item.blur(); }); }
                 return this;
             },
@@ -163,12 +165,13 @@
             },
             submit: function(){
             	if(func){
-	                document.addEventListener("submit", function(e){
-	                    [].forEach.call(this, function(item){
-	                        if(e.target==item || e.target.parentNode==item) func(e);
-	                    });
-	                }, false);
-	            }else{ [].forEach.call(this, function(item){ item.click(); }); }
+                    [].forEach.call(this, function(item){
+                    	document.addEventListener("submit", function(e){
+							var listeningTarget = closest(e.target, item);
+							if(listeningTarget) func.call(listeningTarget, e);
+						});
+                    });
+	            }else{ [].forEach.call(this, function(item){ item.submit(); }); }
                 return this;
             }
         };
