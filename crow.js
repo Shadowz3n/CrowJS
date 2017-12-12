@@ -112,15 +112,15 @@
                 [].forEach.call(this, function(item){ item.style.display  = "none"; }); return this;
             },
             eq: function(eq){
-            	return (parseFloat(eq)>=0 || parseFloat(eq)<=this.length-1)? this[eq]:this;
+            	return (parseFloat(eq)>=0 || parseFloat(eq)<=this.length-1)? Crow([this[eq]]):this;
             },
             width: function(newW){
             	if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
-                return newW? this:this[this.length-1].style.width;
+                return newW? this:Number(this[this.length-1].style.width.replace("px","").replace("vw","").replace("vh",""));
             },
             height: function(newH){
             	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
-                return newH? this:this[this.length-1].style.height;
+                return newH? this:Number(this[this.length-1].style.height.replace("px","").replace("vw","").replace("vh",""));
             },
             focus: function(func){
             	if(func){
