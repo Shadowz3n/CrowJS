@@ -107,6 +107,9 @@
             eq: function(eq){
                 return (parseFloat(eq)>=0 || parseFloat(eq)<=this.length-1)? Crow([this[eq]]):this;
             },
+            position: function(){
+                return {top:this[0].offsetTop, left:this[0].offsetLeft};
+            },
             width: function(newW){
                 if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
                 return newW? this:this[this.length-1].offsetWidth;
