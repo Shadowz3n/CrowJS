@@ -1,14 +1,14 @@
 (function(global, factory){
     (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
 }(this, function(window){
-	var closest = (function(){
-		var el = HTMLElement.prototype;
-		var matches = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
-		return function closest(el, selector){
-			var nSelector = (selector.className || selector.id || selector.nodeName);
-			return (nSelector)? matches.call(el, nSelector)? el:closest(el.parentElement, nSelector):el;
-		};
-	})();
+    var closest = (function(){
+        var el = HTMLElement.prototype;
+        var matches = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+        return function closest(el, selector){
+            var nSelector = (selector.className || selector.id || selector.nodeName);
+            return (nSelector)? matches.call(el, nSelector)? el:closest(el.parentElement, nSelector):el;
+        };
+    })();
     var document        = window.document, body = document.body;
     var Crow            = (function(el){
         crow            = (el instanceof Object)? el:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
@@ -87,11 +87,11 @@
                 return this;
             },
             remove: function(){
-            	return (this instanceof Object)? [].forEach.call(this, function(item_){ item_.parentNode.removeChild(item_); }):this.parentNode.removeChild(this);
+                return (this instanceof Object)? [].forEach.call(this, function(item_){ item_.parentNode.removeChild(item_); }):this.parentNode.removeChild(this);
             },
             attr: function(attr){
-            	if(attr) (this instanceof Object)? [].forEach.call(this, function(item_){ for(var i in attr){ item_.setAttribute(i, attr[i]); } }):(function(){ for(var i in attr){ item_.setAttribute(i, attr[i]); } });
-            	return this;
+                if(attr) (this instanceof Object)? [].forEach.call(this, function(item_){ for(var i in attr){ item_.setAttribute(i, attr[i]); } }):(function(){ for(var i in attr){ item_.setAttribute(i, attr[i]); } });
+                return this;
             },
             find: function(selector){
                 var finds    = [];
@@ -112,69 +112,38 @@
                 [].forEach.call(this, function(item){ item.style.display  = "none"; }); return this;
             },
             eq: function(eq){
-            	return (parseFloat(eq)>=0 || parseFloat(eq)<=this.length-1)? Crow([this[eq]]):this;
+                return (parseFloat(eq)>=0 || parseFloat(eq)<=this.length-1)? Crow([this[eq]]):this;
             },
             width: function(newW){
-            	if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
+                if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
                 return newW? this:this[this.length-1].offsetWidth;
             },
             height: function(newH){
-            	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
+                if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
                 return newH? this:this[this.length-1].offsetHeight;
             },
             val: function(){
-            	return this.value? this.value:null;
+                return this.value? this.value:null;
             },
             prop: function(prop){
-            	var ifCheck	= false;
-            	if(prop) [].forEach.call(this, function(item){ if(item[prop]) ifCheck = true; });
-            	return ifCheck;
-            },
-            focus: function(func=false){
-            	if(func){
-                    [].forEach.call(this, function(item){
-                    	document.addEventListener("focus", function(e){
-							var listeningTarget = closest(e.target, item);
-							if(listeningTarget) func.call(listeningTarget, e);
-						});
-                    });
-	            }else{ [].forEach.call(this, function(item){ item.focus(); }); }
-                return this;
-            },
-            blur: function(func=false){
-            	if(func){
-                    [].forEach.call(this, function(item){
-                    	document.addEventListener("blur", function(e){
-							var listeningTarget = closest(e.target, item);
-							if(listeningTarget) func.call(listeningTarget, e);
-						});
-                    });
-	            }else{ [].forEach.call(this, function(item){ item.blur(); }); }
-                return this;
-            },
-            click: function(func=false){
-            	if(func){
-                    [].forEach.call(this, function(item){
-                    	document.addEventListener("click", function(e){
-							var listeningTarget = closest(e.target, item);
-							if(listeningTarget) func.call(listeningTarget, e);
-						});
-                    });
-	            }else{ [].forEach.call(this, function(item){ item.click(); }); }
-                return this;
-            },
-            submit: function(){
-            	if(func){
-                    [].forEach.call(this, function(item){
-                    	document.addEventListener("submit", function(e){
-							var listeningTarget = closest(e.target, item);
-							if(listeningTarget) func.call(listeningTarget, e);
-						});
-                    });
-	            }else{ [].forEach.call(this, function(item){ item.submit(); }); }
-                return this;
+                var ifCheck = false;
+                if(prop) [].forEach.call(this, function(item){ if(item[prop]) ifCheck = true; });
+                return ifCheck;
             }
         };
+        ['focus', 'blur', 'mouseover', 'click', 'submit'].forEach(function(action){
+            crow.__proto__[action] = function(func){
+                if(func){
+                    [].forEach.call(this, function(item){
+                        document.addEventListener(action, function(e){
+                            var listeningTarget = closest(e.target, item);
+                            if(listeningTarget) func.call(listeningTarget, e);
+                        });
+                    });
+                }else{ [].forEach.call(this, function(item){ item[action](); }); }
+                return this;
+            }
+        });
         return crow;
     });
     Crow.ready = function(callback){
@@ -189,9 +158,7 @@
             xhr.open((options.type? options.type:'GET'), options.url);
             if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             xhr.onload = function(){
-                if(xhr.status===200){
-                    xhr.data    = xhr.responseText;
-                }
+                if(xhr.status===200) xhr.data    = xhr.responseText;
             }
             if(options.dataType) xhr.responseType = options.dataType;
             if(options.headers){
