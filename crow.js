@@ -5,7 +5,8 @@
 		var el = HTMLElement.prototype;
 		var matches = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
 		return function closest(el, selector){
-			return matches.call(el, selector) ? el : closest(el.parentElement, selector);
+			var nSelector = (selector.className || selector.id || selector.nodeName);
+			return (nSelector)? matches.call(el, nSelector)? el:closest(el.parentElement, nSelector):el;
 		};
 	})();
     var document        = window.document, body = document.body;
@@ -151,11 +152,12 @@
             },
             click: function(func=false){
             	if(func){
-	                document.addEventListener("click", function(e){
-	                    [].forEach.call(this, function(item){
-	                        if(e.target==item || e.target.parentNode==item) func(e);
-	                    });
-	                }, false);
+                    [].forEach.call(this, function(item){
+                    	document.addEventListener("click", function(e){
+							var listeningTarget = closest(e.target, item);
+							if(listeningTarget) func.call(listeningTarget, e);
+						});
+                    });
 	            }else{ [].forEach.call(this, function(item){ item.click(); }); }
                 return this;
             },
