@@ -122,6 +122,9 @@
             	if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
                 return newH? this:this[this.length-1].offsetHeight;
             },
+            val: function(){
+            	return this.value? this.value:null;
+            },
             focus: function(func=false){
             	if(func){
 	                document.addEventListener("focus", function(e){
