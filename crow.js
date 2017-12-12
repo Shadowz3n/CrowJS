@@ -125,6 +125,11 @@
             val: function(){
             	return this.value? this.value:null;
             },
+            prop: function(prop){
+            	var ifCheck	= false;
+            	if(prop) [].forEach.call(this, function(item){ if(item[prop]) ifCheck = true; });
+            	return ifCheck;
+            },
             focus: function(func=false){
             	if(func){
 	                document.addEventListener("focus", function(e){
