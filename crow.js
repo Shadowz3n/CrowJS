@@ -122,9 +122,15 @@
                 var ifCheck = false;
                 if(prop) [].forEach.call(this, function(item){ if(item[prop]) ifCheck = true; });
                 return ifCheck;
+            },
+            load: function(func){
+                (this instanceof HTMLImageElement)? this.addEventListener('load', func):this.addEventListener('DOMContentLoaded', func);
+            },
+            error: function(func){
+                this.addEventListener('error', func);
             }
         };
-        ['focus', 'blur', 'mouseover', 'mouseout', 'click', 'submit'].forEach(function(action){
+        ['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'click', 'submit'].forEach(function(action){
             crow.__proto__[action] = function(func){
                 if(func){
                     [].forEach.call(this, function(item){
