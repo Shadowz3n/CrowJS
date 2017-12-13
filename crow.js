@@ -1,7 +1,7 @@
 (function(global, factory){
     (typeof define==='function' && define.amd)? define(function(){return factory(global)}):factory(global);
 }(this, function(window){
-    if(!HTMLElement.prototype.matches) HTMLElement.prototype.matches = HTMLElement.prototype.webkitMatchesSelector || HTMLElement.prototype.mozMatchesSelector || HTMLElement.prototype.msMatchesSelector
+    if(!HTMLElement.prototype.matches) HTMLElement.prototype.matches = HTMLElement.prototype.webkitMatchesSelector || HTMLElement.prototype.mozMatchesSelector || HTMLElement.prototype.msMatchesSelector;
     var document        = window.document, body = document.body;
     var Crow            = (function(el){
         crow            = (el instanceof Object)? el:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
@@ -122,9 +122,8 @@
                 return this.value? this.value:null;
             },
             prop: function(prop){
-                var ifCheck = false;
-                if(prop) [].forEach.call(this, function(item){ if(item[prop]) ifCheck = true; });
-                return ifCheck;
+                if(prop) [].forEach.call(this, function(item){ if(item[prop]) return true; });
+                return false;
             },
             load: function(func){
                 (this instanceof HTMLImageElement)? this.addEventListener('load', func):this.addEventListener('DOMContentLoaded', func);
@@ -138,7 +137,7 @@
                 if(func){
                     [].forEach.call(this, function(item){
                         document.addEventListener(action, function(e){
-                            return (e.target===item || (e.target.parentNode && e.target.parentNode===item))? func(e):false;
+                            return (e.target===item || e.target.parentNode===item)? func(e):false;
                         });
                     });
                 }else{ [].forEach.call(this, function(item){ item[action](); }); }
