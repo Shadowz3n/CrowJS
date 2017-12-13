@@ -140,7 +140,7 @@
                             return (e.target===item || e.target.parentNode===item)? func(e):false;
                         });
                     });
-                }else{ [].forEach.call(this, function(item){ item[action](); }); }
+                }else{ [].forEach.call(this, function(item){ if(item[action]) item[action](); }); }
                 return this;
             }
         });
