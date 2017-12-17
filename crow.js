@@ -165,16 +165,12 @@
             if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             if(options.dataType) xhr.responseType = options.dataType;
             if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
-            xhr.__proto__.percent = function(){
-                return (xhr instanceof window.XMLHttpRequest)? xhr.addEventListener('porcentagem', this.progress, false):true;
-                return (xhr.upload)? xhr.upload.addEventListener('porcentagem', this.progress, false):true;
-                return xhr;
-            }
+            xhr.addEventListener('percent', options.percent(xhr.progress), false);
+            xhr.upload.addEventListener('percent', options.percent(xhr.progress), false);
             xhr.__proto__.done    	= function(func){
-            	var doneCallback	= setTimeout(function(){
-            		(xhr.status==200)? func(xhr.responseText):doneCallback();
-            	}, 10);
+            	var doneCallback	= setTimeout(function(){ (xhr.status==200)? func(xhr.responseText):doneCallback(); }, 10);
             }
+            if(options.beforeSend) options.beforeSend();
             xhr.send((options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null));
         }
         return xhr;
