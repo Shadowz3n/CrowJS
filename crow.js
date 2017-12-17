@@ -160,14 +160,9 @@
     }
     Crow.ajax   = (function(options){
         var xhr = new XMLHttpRequest();
-        ['done', 'fail'].forEach(function(action){
-        	xhr.__proto__[action]	= function(func){
-        		this.onreadystatechange	= function(){
-        			if(action=='fail' && this.readyState==4 && this.status!==200) func(this.status);
-        			if(action=='done' && this.readyState==4 && this.status===200) func(this.responseText);
-        		}; return this;
-        	}
-        });
+        xhr.__proto__.done	= function(){
+        	this.onreadystatechange	= function(){ if(this.readyState==4) func(this.responseText, this.status); }
+        };
         if(!options.url) options.url	= document.location.href;
         xhr.open((options.type? options.type:'GET'), options.url);
         if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
