@@ -162,7 +162,7 @@
         var xhr = new XMLHttpRequest();
         ['done', 'fail'].forEach(function(action){
         	xhr.__proto__[action]	= function(func){
-        		this.onreadystatechange	= function(){ (this.readyState==4 && this.status===200)? func(this.responseText):(this.status!==200)? func(this.status):true; }; return this;
+        		this.onreadystatechange	= function(){ (this.readyState==4 && this.status===200)? func(this.responseText):(this.readyState==4 && this.status!==200)? func(this.status):true; }; return this;
         	}
         });
         if(options && options.url){
