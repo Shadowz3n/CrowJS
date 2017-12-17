@@ -168,10 +168,10 @@
             if(xhr instanceof window.XMLHttpRequest) xhr.addEventListener('percent', function(){ return options.percent(xhr.progress); }, false);
             if(xhr.upload) xhr.upload.addEventListener('percent', function(){ return options.percent(xhr.progress); }, false);
             xhr.__proto__.fail		= function(func){
-            	var failCallback	= setTimeout(function(){ (this.status!=200)? func(this.status):xhr.__proto__.fail(func); }, 10); return this;
+            	this.onreadystatechange	= function(){ if(this.readyState==4 && this.status!=200) func(this.status); }; return this;
             }
             xhr.__proto__.done    	= function(func){
-            	var doneCallback	= setTimeout(function(){ (this.readyState==4)? func(this.responseText):xhr.__proto__.done(func); }, 10); return this;
+            	this.onreadystatechange	= function(){ if(this.readyState==4) func(this.responseText); }; return this;
             }
             if(options.beforeSend) options.beforeSend();
             xhr.send((options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null));
