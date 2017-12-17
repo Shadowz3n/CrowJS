@@ -167,8 +167,11 @@
             if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
             if(xhr instanceof window.XMLHttpRequest) xhr.addEventListener('percent', function(){ return options.percent(xhr.progress); }, false);
             if(xhr.upload) xhr.upload.addEventListener('percent', function(){ return options.percent(xhr.progress); }, false);
+            xhr.__proto__.fail		= function(func){
+            	var failCallback	= setTimeout(function(){ (this.status!=200)? func(this.status):xhr.__proto__.fail(func); }, 10); return this;
+            }
             xhr.__proto__.done    	= function(func){
-            	var doneCallback	= setTimeout(function(){ (xhr.status==200)? func(xhr.responseText):doneCallback(); }, 10);
+            	var doneCallback	= setTimeout(function(){ (this.readyState==4)? func(this.responseText):xhr.__proto__.done(func); }, 10); return this;
             }
             if(options.beforeSend) options.beforeSend();
             xhr.send((options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null));
