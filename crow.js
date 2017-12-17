@@ -162,19 +162,21 @@
         var xhr = new XMLHttpRequest();
         ['done', 'fail'].forEach(function(action){
         	xhr.__proto__[action]	= function(func){
-        		this.onreadystatechange	= function(){ (this.readyState==4 && this.status===200)? func(this.responseText):(this.readyState==4 && this.status!==200)? func(this.status):true; }; return this;
+        		this.onreadystatechange	= function(){
+        			if(action=='fail' && this.readyState==4 && this.status!==200) func(this.status);
+        			if(action=='done' && this.readyState==4 && this.status===200) func(this.responseText);
+        		}; return this;
         	}
         });
-        if(options && options.url){
-            xhr.open((options.type? options.type:'GET'), options.url);
-            if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-            if(options.dataType) xhr.responseType = options.dataType;
-            if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
-            if(xhr instanceof window.XMLHttpRequest) xhr.addEventListener('percent', xhr.progress, false);
-            if(xhr.upload) xhr.upload.addEventListener('percent', xhr.progress, false);
-            if(options.beforeSend) options.beforeSend();
-            xhr.send((options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null));
-        }
+        if(!options.url) options.url	= document.location.href;
+        xhr.open((options.type? options.type:'GET'), options.url);
+        if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        if(options.dataType) xhr.responseType = options.dataType;
+        if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
+        if(xhr instanceof window.XMLHttpRequest) xhr.addEventListener('percent', xhr.progress, false);
+        if(xhr.upload) xhr.upload.addEventListener('percent', xhr.progress, false);
+        if(options.beforeSend) options.beforeSend();
+        xhr.send((options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null));
         return xhr;
     });
     window.Crow = Crow;
