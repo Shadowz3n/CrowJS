@@ -47,6 +47,12 @@
                 [].forEach.call(crow, function(item){ if(html) item.innerHTML = html; });
                 return html? this:this[this.length-1].innerHTML;
             },
+            css: function(style){
+            	[].forEach.call(crow, function(item){
+            		for(var i in style){ item.style[i]	= style[i]; }
+            	});
+            	return this;
+            },
             append: function(html){
                 if(html){
                     [].forEach.call(this, function(item){
