@@ -158,20 +158,20 @@
     Crow.createElementFromString = function(str){
         return new DOMParser().parseFromString(str, 'text/html').body.firstChild;
     }
-    Crow.ajax   = (function(options){
-        var xhr = new XMLHttpRequest();
+    Crow.ajax       = (function(options){
+        var xhr     = new XMLHttpRequest();
+        var data    = (options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null);
         xhr.__proto__.done  = function(func){
             this.onreadystatechange = function(){ if(this.readyState==4) func(this.responseText, this.status); }
         };
-        if(!options.url) options.url    = document.location.href;
-        xhr.open((options.type? options.type:'GET'), options.url);
+        xhr.open((options.type? options.type:'GET'), (options.url || document.location.href)+(options.type && options.type=='GET'? "?"+data:''));
         if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         if(options.dataType) xhr.responseType = options.dataType;
         if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
         if(xhr instanceof window.XMLHttpRequest) xhr.addEventListener('percent', xhr.progress, false);
         if(xhr.upload) xhr.upload.addEventListener('percent', xhr.progress, false);
         if(options.beforeSend) options.beforeSend();
-        xhr.send((options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null));
+        xhr.send((options.type && options.type=='POST')? data:null);
         return xhr;
     });
     window.Crow = Crow;
