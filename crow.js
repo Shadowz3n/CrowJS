@@ -160,7 +160,7 @@
     }
     Crow.ajax       = (function(options){
         var xhr     = new XMLHttpRequest();
-        var data    = (options.data? Object.keys(options.data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(options.data[k])).join('&'):null);
+        var data    = (options.data? Object.keys(options.data).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(options.data[k]); }).join('&'):null);
         xhr.__proto__.done  = function(func){
             this.onreadystatechange = function(){ if(this.readyState==4) func(this.responseText, this.status); }
         };
