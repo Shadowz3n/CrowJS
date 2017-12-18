@@ -48,10 +48,10 @@
                 return html? this:this[this.length-1].innerHTML;
             },
             css: function(style){
-            	[].forEach.call(crow, function(item){
-            		for(var i in style){ item.style[i]	= style[i]; }
-            	});
-            	return this;
+                [].forEach.call(crow, function(item){
+                    for(var i in style){ item.style[i]  = style[i]; }
+                });
+                return this;
             },
             append: function(html){
                 if(html){
@@ -160,10 +160,10 @@
     }
     Crow.ajax   = (function(options){
         var xhr = new XMLHttpRequest();
-        xhr.__proto__.done	= function(){
-        	this.onreadystatechange	= function(){ if(this.readyState==4) func(this.responseText, this.status); }
+        xhr.__proto__.done  = function(func){
+            this.onreadystatechange = function(){ if(this.readyState==4) func(this.responseText, this.status); }
         };
-        if(!options.url) options.url	= document.location.href;
+        if(!options.url) options.url    = document.location.href;
         xhr.open((options.type? options.type:'GET'), options.url);
         if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         if(options.dataType) xhr.responseType = options.dataType;
