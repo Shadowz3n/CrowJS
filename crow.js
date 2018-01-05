@@ -48,10 +48,10 @@
                 return html? this:this[this.length-1].innerHTML;
             },
             css: function(style){
-                [].forEach.call(crow, function(item){
-                    for(var i in style){ item.style[i]  = style[i]; }
-                });
-                return this;
+            	[].forEach.call(crow, function(item){
+            		for(var i in style){ item.style[i]	= style[i]; }
+            	});
+            	return this;
             },
             append: function(html){
                 if(html){
@@ -144,7 +144,7 @@
                     [].forEach.call(this, function(item){
                         document.addEventListener(action, function(e){
                             return (e.target===item || e.target.parentNode===item)? func(e):false;
-                        });
+                        }, false);
                     });
                 }else{ [].forEach.call(this, function(item){ if(item[action]) item[action](); }); }
                 return this;
@@ -158,20 +158,22 @@
     Crow.createElementFromString = function(str){
         return new DOMParser().parseFromString(str, 'text/html').body.firstChild;
     }
-    Crow.ajax       = (function(options){
-        var xhr     = new XMLHttpRequest();
-        var data    = (options.data? Object.keys(options.data).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(options.data[k]); }).join('&'):null);
-        xhr.__proto__.done  = function(func){
-            this.onreadystatechange = function(){ if(this.readyState==4) func(this.responseText, this.status); }
-        };
-        xhr.open((options.type? options.type:'GET'), (options.url || document.location.href)+(options.type && options.type=='GET'? "?"+data:''));
+    Crow.ajax   = (function(options){
+        var xhr = new XMLHttpRequest();
+        xhr.__proto__.done	= function(func){
+        	this.onreadystatechange	= function(){ if(this.readyState==4) func(this.responseText, this.status); }
+        }
+        if(!options.url) options.url	= document.location.href;
+        if(xhr.onprogress){
+            xhr.onprogress = function(e){ return e; }
+            xhr.upload.onprogress = function(e){ return e; }
+        }
+        xhr.open((options.type? options.type:'GET'), options.url);
         if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         if(options.dataType) xhr.responseType = options.dataType;
         if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
-        if(xhr instanceof window.XMLHttpRequest) xhr.addEventListener('percent', xhr.progress, false);
-        if(xhr.upload) xhr.upload.addEventListener('percent', xhr.progress, false);
         if(options.beforeSend) options.beforeSend();
-        xhr.send((options.type && options.type=='POST')? data:null);
+        xhr.send((options.data? Object.keys(options.data).length>0? Object.keys(options.data).map(k => { return encodeURIComponent(k)+"="+encodeURIComponent(options.data[k])}).join("&"):options.data:null));
         return xhr;
     });
     window.Crow = Crow;
