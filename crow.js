@@ -173,20 +173,12 @@
         if(options.dataType) xhr.responseType = options.dataType;
         if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
         if(options.beforeSend) options.beforeSend();
-        var newData = '';
         if(Object.keys(options.data).length>0){
-            for(var k in options.data){
-                if(typeof options.data[k]=="object"){
-                    (function(){for(var j in options.data[k]){
-                        newData += encodeURIComponent(k)+"["+encodeURIComponent(j)+"]="+encodeURIComponent(options.data[k][j])+"&";
-                    }})()
-                }else{
-                    newData += encodeURIComponent(k)+"="+encodeURIComponent(options.data[k])+"&";
-                }
-            }
+            var newData='';
+            (function(){ for(var k in options.data){ (typeof options.data[k]=="object")? (function(){for(var j in options.data[k]){ newData += encodeURIComponent(k)+"["+encodeURIComponent(j)+"]="+encodeURIComponent(options.data[k][j])+"&" }})():newData += encodeURIComponent(k)+"="+encodeURIComponent(options.data[k])+"&"; } })()
             options.data = newData.slice(0, -1);
         }
-        xhr.send((options.data? Object.keys(options.data).length>0? Object.keys(options.data).map(function(k){ return (typeof k=="string")? encodeURIComponent(k)+"="+encodeURIComponent(options.data[k]):(function(){ for(var i in k){ encodeURIComponent(i)+"="+encodeURIComponent(options.data[k][i]) } })}).join("&"):options.data:null));
+        xhr.send((options.data? options.data:null));
         return xhr;
     });
     window.Crow = Crow;
