@@ -4,7 +4,7 @@
     if(!HTMLElement.prototype.matches) HTMLElement.prototype.matches = HTMLElement.prototype.webkitMatchesSelector || HTMLElement.prototype.mozMatchesSelector || HTMLElement.prototype.msMatchesSelector;
     var document        = window.document, body = document.body;
     var Crow            = (function(el){
-        crow            = (el instanceof Object)? el:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
+        crow            = (el instanceof Object)? [el]:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
         crow.__proto__  = {
             addClass: function(class_){
                 var toAdd   = class_.split(" ");
@@ -48,10 +48,10 @@
                 return html? this:this[this.length-1].innerHTML;
             },
             css: function(style){
-            	[].forEach.call(crow, function(item){
-            		for(var i in style){ item.style[i]	= style[i]; }
-            	});
-            	return this;
+                [].forEach.call(crow, function(item){
+                    for(var i in style){ item.style[i]  = style[i]; }
+                });
+                return this;
             },
             append: function(html){
                 if(html){
@@ -89,7 +89,8 @@
                 return (this instanceof Object)? [].forEach.call(this, function(item_){ item_.parentNode.removeChild(item_); }):this.parentNode.removeChild(this);
             },
             attr: function(attr){
-                if(attr) (this instanceof Object)? [].forEach.call(this, function(item_){ for(var i in attr){ item_.setAttribute(i, attr[i]); } }):(function(){ for(var i in attr){ item_.setAttribute(i, attr[i]); } });
+                if(typeof attr==="string") return this[0].getAttribute(attr);
+                if(attr) (this instanceof Object)? (attr instanceof String)? this[0].getAttribute(attr):[].forEach.call(this, function(item_){ for(var i in attr){ item_.setAttribute(i, attr[i]); } }):(function(){ for(var i in attr){ item_.setAttribute(i, attr[i]); } });
                 return this;
             },
             find: function(selector){
@@ -143,7 +144,7 @@
                 if(func){
                     [].forEach.call(this, function(item){
                         document.addEventListener(action, function(e){
-                            return (e.target===item || e.target.parentNode===item)? func(e):false;
+                            return (e.target===item || e.target.parentNode===item)? func(item):false;
                         }, false);
                     });
                 }else{ [].forEach.call(this, function(item){ if(item[action]) item[action](); }); }
@@ -160,10 +161,10 @@
     }
     Crow.ajax   = (function(options){
         var xhr = new XMLHttpRequest();
-        xhr.__proto__.done	= function(func){
-        	this.onreadystatechange	= function(){ if(this.readyState==4) func(this.responseText, this.status); }
+        xhr.__proto__.done  = function(func){
+            this.onreadystatechange = function(){ if(this.readyState==4) func(this.responseText, this.status); }
         }
-        if(!options.url) options.url	= document.location.href;
+        if(!options.url) options.url    = document.location.href;
         if(xhr.onprogress){
             xhr.onprogress = function(e){ return e; }
             xhr.upload.onprogress = function(e){ return e; }
