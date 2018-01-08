@@ -182,5 +182,5 @@
         xhr.send((options.data? options.data:null));
         return xhr;
     });
-    window.Crow = Crow;
+    window.c = Crow;
 }));
