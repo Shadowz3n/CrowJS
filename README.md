@@ -223,7 +223,7 @@ Serialize all form:
 
 	```
 	c.ajax({
-		upload:this
+		upload:c("#form")
 	});
 	```
 	
