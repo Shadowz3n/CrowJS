@@ -12,6 +12,7 @@ weighing much less and with much more performance
 	c(".class, .other_class, #id");
 	
 	or create some elements:
+	
 	c("<div>teste</div>");
 	```
 
