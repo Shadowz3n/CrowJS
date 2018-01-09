@@ -2,6 +2,10 @@
 
 # [CrowJS - API Documentation](https://shadowz3n.github.io/CrowJS/)
 
+## External URL: https://raw.githubusercontent.com/Shadowz3n/CrowJS/master/crow.js
+
+# CrowJS
+
 this Javascript lib is based on jQuery, Zepto, VueJS.
 weighing much less and with much more performance
 
