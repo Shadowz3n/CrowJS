@@ -44,11 +44,11 @@
             },
             html: function(html){
                 var thisHtml    = '';
-                [].forEach.call(crow, function(item){ if(html) item.innerHTML = html; });
+                [].forEach.call(this, function(item){ if(html) item.innerHTML = html; });
                 return html? this:this[this.length-1].innerHTML;
             },
             css: function(style){
-                [].forEach.call(crow, function(item){
+                [].forEach.call(this, function(item){
                     for(var i in style){ item.style[i]  = style[i]; }
                 });
                 return this;
@@ -135,8 +135,19 @@
             load: function(func){
                 (this instanceof HTMLImageElement)? this.addEventListener('load', func):this.addEventListener('DOMContentLoaded', func);
             },
+            animate: function(style, time=300, transition="ease", func){
+                [].forEach.call(this, function(item){
+                    item.style.transition = "all "+time+"ms "+transition;
+                    setTimeout(function(){
+                        for(var i in style){ item.style[i]   = style[i]; }
+                    });
+                });
+                if(func) setTimeout(function(){ return func(this); }, time);
+                return this;
+            },
             error: function(func){
-                this.addEventListener('error', func);
+                [].forEach.call(this, function(item){ item.addEventListener('onerror', func); });
+                return this;
             }
         };
         ['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'mousemove', 'click', 'submit'].forEach(function(action){
