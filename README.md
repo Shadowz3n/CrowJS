@@ -3,6 +3,20 @@
 this Javascript lib is based on jQuery, Zepto, VueJS.
 weighing much less and with much more performance
 
+
+# Selector
+	```
+	c("body");
+	c(".class");
+	c("#id");
+	c(".class, .other_class, #id");
+	
+	or create some elements:
+	c("<div>teste</div>");
+	```
+
+
+
 # Classes
 
 Add Class:
@@ -56,14 +70,87 @@ Prepend some HTML:
 	c("body").prepend(newDiv);
 	```
 	
-Remove element:
+Append after some HTML:
+
+	```
+	c("body").after('<div>test</div>');
+	or
+	var newDiv = c('<div></div>');
+	c("body").after(newDiv);
+	```
+	
+Append before some HTML:
+
+	```
+	c("body").before('<div>test</div>');
+	or
+	var newDiv = c('<div></div>');
+	c("body").before(newDiv);
+	
+Remove element(s):
 
 	```
 	c("div").remove();
 	```
-  
+
+
+# Manipulation
+
+	
+Change an attribute(s):
+
+	```
+	c("body").attr({'data-attr1':'test', 'data-attr2':'test2'});
+	```
+	
+Find something:
+
+	```
+	c("body").find(".class");
+	```
+Get closest content:
+
+	```
+	c("div").closest(".class");
+	```
+	
+Get element by index:
+
+	```
+	c("div").eq(0);
+	```
+	
+Get element(s) position(s):
+
+	```
+	console.log(c("div").position());
+	```
+	
+Get or change element(s) width(s):
+
+	```
+	console.log(c("div").width());
+	and 
+	c("div").width(300);
+	```
+	
+Get or change element(s) height(s):
+
+	```
+	console.log(c("div").height());
+	and 
+	c("div").height(300);
+	```
+	
+Get input value:
+
+	```
+	console.log(c("input").val());
+	```
+ 
  
 # CSS & Animation
+
  
 Manipulate css:
 
@@ -99,4 +186,52 @@ Hide something:
 
 	```
 	c("div").hide();
+	```
+	
+	
+	
+# Ajax
+
+Serialize all form:
+	```
+	c("#this_form").submit(function(e){
+	    e.preventDefault();
+	    c.ajax({
+		upload:this
+	    });
+	});
+	```
+	
+Get upload progress:
+	```
+	c("#this_form").submit(function(e){
+	    e.preventDefault();
+	    c.ajax({
+		onprogress:function(per){
+		    console.log(per);
+		},
+		upload:this
+	    });
+	});
+	```
+	
+Send post:
+	```
+	c("#this_form").submit(function(e){
+	    e.preventDefault();
+	    c.ajax({
+		type:"POST",
+		data:{name:"Henrique", lastname:"Bissoli"}
+	    });
+	});
+	```
+	
+Send get:
+	```
+	c("#this_form").submit(function(e){
+	    e.preventDefault();
+	    c.ajax({
+	    	url:document.location.href
+	    });
+	});
 	```
