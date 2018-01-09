@@ -177,8 +177,8 @@
             this.onreadystatechange = function(){ if(this.readyState==4) func(this.responseText, this.status); }
         }
         if(options.onprogress){
-            xhr.onprogress  = function(e){ if(e.lengthComputable) options.onprogress((e.loaded/e.total)*100); }
-            xhr.upload.onprogress  = function(e){ if(e.lengthComputable) options.onprogress((e.loaded/e.total)*100); }
+            xhr.onprogress  = function(e){ if(e.lengthComputable) options.onprogress((e.loaded/e.total)*100, e); }
+            xhr.upload.onprogress  = function(e){ if(e.lengthComputable) options.onprogress((e.loaded/e.total)*100, e); }
         }
         if(!options.url) options.url    = document.location.href;
         xhr.open((options.type? options.type:options.upload? 'POST':'GET'), options.url);
@@ -191,7 +191,7 @@
             (function(){ for(var k in options.data){ (typeof options.data[k]=="object")? (function(){for(var j in options.data[k]){ newData += encodeURIComponent(k)+"["+encodeURIComponent(j)+"]="+encodeURIComponent(options.data[k][j])+"&" }})():newData += encodeURIComponent(k)+"="+encodeURIComponent(options.data[k])+"&"; } })()
             options.data = newData.slice(0, -1);
         }
-        xhr.send(options.data? options.data:options.upload? new FormData(options.upload):null);
+        xhr.send(options.data? options.data:options.upload? new FormData(options.upload.tagName? options.upload:options.upload[0]):null);
         return xhr;
     });
     window.c = Crow;
