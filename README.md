@@ -192,46 +192,71 @@ Hide something:
 	
 # Ajax
 
-Serialize all form:
+Parameters:
+
 	```
-	c("#this_form").submit(function(e){
-	    e.preventDefault();
-	    c.ajax({
+		url: "default: document.location.href"
+		type: "default: GET"
+		data: "default: undefined"
+		beforeSend: "function"
+		dataType: "default: undefined"
+		headers: "default: undefined"
+	```
+	
+
+Serialize all form:
+
+	```
+	c.ajax({
 		upload:this
-	    });
 	});
 	```
 	
 Get upload progress:
+
 	```
-	c("#this_form").submit(function(e){
-	    e.preventDefault();
-	    c.ajax({
+	c.ajax({
 		onprogress:function(per){
-		    console.log(per);
+			console.log(per);
 		},
-		upload:this
-	    });
+		upload:c("#form")
 	});
 	```
 	
 Send post:
+
 	```
-	c("#this_form").submit(function(e){
-	    e.preventDefault();
-	    c.ajax({
+	c.ajax({
 		type:"POST",
 		data:{name:"Henrique", lastname:"Bissoli"}
-	    });
 	});
 	```
 	
 Send get:
+
+	```
+	c.ajax({
+		url:document.location.href
+	});
+	```
+	
+On Ajax done:
+
+	```
+	c.ajax({
+		url:document.location.href
+	}).done(function(data){
+		console.log(data);
+	});
+	```
+	
+Change Ajax headers:
+
 	```
 	c("#this_form").submit(function(e){
 	    e.preventDefault();
 	    c.ajax({
-	    	url:document.location.href
+	    	headers:{'header1':'test', 'header2':'test2'}
 	    });
 	});
 	```
