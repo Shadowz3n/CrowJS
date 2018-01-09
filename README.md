@@ -38,6 +38,21 @@ Toggle Class:
 	```
 
 
+# Actions
+	```
+		Actions:
+			focus, blur, keydown, keypress, keyup, mouseover, mouseout, mousemove, click, submit
+	```
+
+	```
+	c("body").click(function(e){
+		console.log(e);
+		console.log(this);
+	});
+	```
+
+
+
 # HTML
 
 Change some HTML:
