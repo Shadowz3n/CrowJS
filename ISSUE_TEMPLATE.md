@@ -5,7 +5,7 @@
   </head>
   <body>
     
-    <script src="crow.js"></script>
+    <script src="https://raw.githubusercontent.com/Shadowz3n/CrowJS/master/crow.js"></script>
     <script>
       c.ready(function(){
         console.log('CrowJS loaded');
