@@ -2,7 +2,7 @@
 
 # [CrowJS - API Documentation](https://shadowz3n.github.io/CrowJS/)
 
-## External URL: https://raw.githubusercontent.com/Shadowz3n/CrowJS/master/crow.js
+External URL: https://raw.githubusercontent.com/Shadowz3n/CrowJS/master/crow.js
 
 # CrowJS
 
