@@ -4,7 +4,7 @@
     if(!HTMLElement.prototype.matches) HTMLElement.prototype.matches = HTMLElement.prototype.webkitMatchesSelector || HTMLElement.prototype.mozMatchesSelector || HTMLElement.prototype.msMatchesSelector;
     var document        = window.document, body = document.body;
     var Crow            = (function(el){
-        crow            = (el instanceof Object)? [el]:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
+        crow            = (el instanceof Object)? (el.tagName!==undefined)? [el]:el:(!/^<.*?>$/.test(el) && !Number.isInteger(parseFloat(el)))? [].slice.call(document.querySelectorAll(el)):[Crow.createElementFromString(el)];
         crow.__proto__  = {
             addClass: function(class_){
                 var toAdd   = class_.split(" ");
@@ -142,6 +142,7 @@
         ['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'mousemove', 'click', 'submit'].forEach(function(action){
             crow.__proto__[action] = function(func){
                 if(func){
+                    //func.__proto__ = this;
                     [].forEach.call(this, function(item){
                         document.addEventListener(action, function(e){
                             return (e.target===item || e.target.parentNode===item)? func(item):false;
