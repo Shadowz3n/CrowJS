@@ -176,22 +176,21 @@
         xhr.__proto__.done  = function(func){
             this.onreadystatechange = function(){ if(this.readyState==4) func(this.responseText, this.status); }
         }
-        if(options.onprogress){
+        if(options && options.onprogress){
             xhr.onprogress  = function(e){ if(e.lengthComputable) options.onprogress((e.loaded/e.total)*100, e); }
             xhr.upload.onprogress  = function(e){ if(e.lengthComputable) options.onprogress((e.loaded/e.total)*100, e); }
         }
-        if(!options.url) options.url    = document.location.href;
-        xhr.open((options.type? options.type:options.upload? 'POST':'GET'), options.url);
-        if(options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        if(options.dataType) xhr.responseType = options.dataType;
-        if(options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
-        if(options.beforeSend) options.beforeSend();
-        if(options.data && Object.keys(options.data).length>0){
+        xhr.open((options && options.type? options.type:options? options.upload? 'POST':'GET':'GET'), options && options.url? options.url:document.location.href);
+        if(options && options.type=="POST") xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        if(options && options.dataType) xhr.responseType = options.dataType;
+        if(options && options.headers) for(var i in options.headers){ xhr.setRequestHeader(i, options.headers[i]); }
+        if(options && options.beforeSend) options.beforeSend();
+        if(options && options.data && Object.keys(options.data).length>0){
             var newData='';
             (function(){ for(var k in options.data){ (typeof options.data[k]=="object")? (function(){for(var j in options.data[k]){ newData += encodeURIComponent(k)+"["+encodeURIComponent(j)+"]="+encodeURIComponent(options.data[k][j])+"&" }})():newData += encodeURIComponent(k)+"="+encodeURIComponent(options.data[k])+"&"; } })()
             options.data = newData.slice(0, -1);
         }
-        xhr.send(options.data? options.data:options.upload? new FormData(options.upload.tagName? options.upload:options.upload[0]):null);
+        xhr.send(options && options.data? options.data:options? options.upload? new FormData(options.upload.tagName? options.upload:options.upload[0]):null:null);
         return xhr;
     });
     window.c = Crow;
