@@ -230,7 +230,7 @@ Serialize all form:
 
 	```
 	c.ajax({
-		upload:c("#form")
+		serialize:c("#form")
 	});
 	```
 	
@@ -241,7 +241,7 @@ Get upload progress:
 		onprogress:function(per){
 			console.log(per);
 		},
-		upload:c("#form")
+		serialize:c("#form")
 	});
 	```
 	
