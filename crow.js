@@ -145,6 +145,20 @@
                 if(func) setTimeout(function(){ return func(this); }, time);
                 return this;
             },
+            fadeIn: function(time=300, func){
+                [].forEach.call(this, function(item){
+                    item.style.transition = "all "+time+"ms ease";
+                    item.style.opacity = 1;
+                });
+                if(func) setTimeout(function(){ return func(this); }, time);
+            },
+            fadeOut: function(time=300, func){
+                [].forEach.call(this, function(item){
+                    item.style.transition = "all "+time+"ms ease";
+                    item.style.opacity = 0;
+                });
+                if(func) setTimeout(function(){ return func(this); }, time);
+            },
             error: function(func){
                 [].forEach.call(this, function(item){ item.addEventListener('onerror', func); });
                 return this;
