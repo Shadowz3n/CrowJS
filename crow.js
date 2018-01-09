@@ -147,33 +147,24 @@
             },
             fadeIn: function(time=300, func){
                 [].forEach.call(this, function(item){
-                    item.style.transition = "all "+time+"ms ease";
-                    item.style.opacity = 1;
+                    item.style.transition = "all "+time+"ms ease"; item.style.opacity = 1;
                 });
                 if(func) setTimeout(function(){ return func(this); }, time);
             },
             fadeOut: function(time=300, func){
                 [].forEach.call(this, function(item){
-                    item.style.transition = "all "+time+"ms ease";
-                    item.style.opacity = 0;
+                    item.style.transition = "all "+time+"ms ease"; item.style.opacity = 0;
                 });
                 if(func) setTimeout(function(){ return func(this); }, time);
-            },
-            error: function(func){
-                [].forEach.call(this, function(item){ item.addEventListener('onerror', func); });
-                return this;
             }
         };
         ['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'mousemove', 'click', 'submit'].forEach(function(action){
             crow.__proto__[action] = function(func){
-                if(func){
-                    //func.__proto__ = this;
-                    [].forEach.call(this, function(item){
-                        document.addEventListener(action, function(e){
+                [].forEach.call(this, function(item){
+                    (func)? document.addEventListener(action, function(e){
                             return (e.target===item || e.target.parentNode===item)? func(item):false;
-                        }, false);
-                    });
-                }else{ [].forEach.call(this, function(item){ if(item[action]) item[action](); }); }
+                    }, false):item[action]();
+                });
                 return this;
             }
         });
