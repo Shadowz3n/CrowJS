@@ -129,18 +129,15 @@
                 return this.value? this.value:null;
             },
             prop: function(prop){
-                if(prop) [].forEach.call(this, function(item){ if(item[prop]) return true; });
-                return false;
+                if(prop) [].forEach.call(this, function(item){ if(item[prop]) return true; }); return false;
             },
             load: function(func){
-                (this instanceof HTMLImageElement)? this.addEventListener('load', func):this.addEventListener('DOMContentLoaded', func);
+                this.addEventListener('DOMContentLoaded', func);
             },
             animate: function(style, time=300, transition="ease", func){
                 [].forEach.call(this, function(item){
                     item.style.transition = "all "+time+"ms "+transition;
-                    setTimeout(function(){
-                        for(var i in style){ item.style[i]   = style[i]; }
-                    });
+                    setTimeout(function(){ for(var i in style){ item.style[i]   = style[i]; } });
                 });
                 if(func) setTimeout(function(){ return func(this); }, time);
                 return this;
@@ -161,9 +158,7 @@
         ['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'mousemove', 'click', 'submit'].forEach(function(action){
             crow.__proto__[action] = function(func){
                 [].forEach.call(this, function(item){
-                    (func)? document.addEventListener(action, function(e){
-                            return (e.target===item || e.target.parentNode===item)? func(item):false;
-                    }, false):item[action]();
+                    (func)? item.addEventListener(action, func, false):item[action]();
                 });
                 return this;
             }
