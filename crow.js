@@ -139,7 +139,9 @@
                     item.style.transition = "all "+time+"ms "+transition;
                     setTimeout(function(){ for(var i in style){ item.style[i]   = style[i]; } });
                 });
-                if(func) setTimeout(function(){ return func(this); }, time);
+                if(time instanceof Object) setTimeout(function(){ return time(this); });
+                if(transition instanceof Object) setTimeout(function(){ return transition(this); });
+                if(func instanceof Object) setTimeout(function(){ return func(this); }, time);
                 return this;
             },
             fadeIn: function(time=300, func){
