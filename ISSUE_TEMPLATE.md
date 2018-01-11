@@ -5,10 +5,10 @@
     </head>
     <body>
         <div></div>
-        <script type="text/javascript" src="https://cdn.rawgit.com/Shadowz3n/CrowJS/master/crow.js"></script>
         <script type="text/javascript">
-            c.ready(function(){
-                
+            window.$ || document.write(unescape('%3Cscript src="https://cdn.rawgit.com/Shadowz3n/CrowJS/master/crow.js"%3E%3C/script%3E'))
+            $.ready(function(){
+                console.log("CrowJS loaded.");
             });
         </script>
     </body>
