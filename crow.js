@@ -139,9 +139,9 @@
                     item.style.transition = "all "+(Number.isInteger(time)? time:300)+"ms "+(typeof transition=="string"? transition:'ease');
                     setTimeout(function(){ for(var i in style){ item.style[i]   = style[i]; } });
                 });
-                if(time instanceof Object) setTimeout(function(){ return time(this); }, 300);
-                if(transition instanceof Object) setTimeout(function(){ return transition(this); }, (Number.isInteger(time)? time:300));
-                if(func instanceof Object) setTimeout(function(){ return func(this); }, (Number.isInteger(time)? time:300));
+                if(time instanceof Object) setTimeout(function(){ time(this); }, 300);
+                if(transition instanceof Object) setTimeout(function(){ transition(this); }, (Number.isInteger(time)? time:300));
+                if(func instanceof Object) setTimeout(function(){ func(this); }, (Number.isInteger(time)? time:300));
                 return this;
             },
             fadeIn: function(time=300, func){
