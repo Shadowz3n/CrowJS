@@ -195,5 +195,5 @@
         xhr.send(options && options.data? options.data:options? options.serialize? new FormData(options.serialize.tagName? options.serialize:options.serialize[0]):null:null);
         return xhr;
     });
-    window.c = Crow;
+    window.$ = Crow;
 }));
