@@ -129,7 +129,7 @@
                 if(prop) [].forEach.call(this, function(item){ if(item[prop]) return true; }); return false;
             },
             load: function(func){
-                this.addEventListener('DOMContentLoaded', func);
+                [].forEach.call(this, function(item){ this.addEventListener('DOMContentLoaded', func); });
             },
             animate: function(style, time=300, transition="ease", func){
                 [].forEach.call(this, function(item){
