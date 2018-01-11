@@ -165,7 +165,7 @@
         return crow;
     });
     Crow.ready = function(callback){
-        (/complete|loaded|interactive/.test(document.readyState) && document.body)? callback(Crow.ready):document.addEventListener('DOMContentLoaded', function(){callback(Crow.ready)}, false); return this;
+        document.addEventListener("DOMContentLoaded", callback(Crow.ready));
     }
     Crow.createElementFromString = function(str){
         return new DOMParser().parseFromString(str, 'text/html').body.firstChild;
