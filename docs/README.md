@@ -80,7 +80,7 @@ Append some HTML:
 	```
 	$("body").append('<div>test</div>');
 	or
-	var newDiv = c('<div></div>');
+	var newDiv = $('<div></div>');
 	$("body").append(newDiv);
 	```
   
@@ -89,7 +89,7 @@ Prepend some HTML:
 	```
 	$("body").prepend('<div>test</div>');
 	or
-	var newDiv = c('<div></div>');
+	var newDiv = $('<div></div>');
 	$("body").prepend(newDiv);
 	```
 	
@@ -98,7 +98,7 @@ Append after some HTML:
 	```
 	$("body").after('<div>test</div>');
 	or
-	var newDiv = c('<div></div>');
+	var newDiv = $('<div></div>');
 	$("body").after(newDiv);
 	```
 	
@@ -107,7 +107,7 @@ Append before some HTML:
 	```
 	$("body").before('<div>test</div>');
 	or
-	var newDiv = c('<div></div>');
+	var newDiv = $('<div></div>');
 	$("body").before(newDiv);
 	
 Remove element(s):
@@ -129,7 +129,7 @@ Change an attribute(s):
 Find something:
 
 	```
-	c("body").find(".class");
+	$("body").find(".class");
 	```
 Get closest content:
 
@@ -231,7 +231,7 @@ Serialize all form:
 
 	```
 	$.ajax({
-		serialize:c("#form")
+		serialize:$("#form")
 	});
 	```
 	
@@ -242,7 +242,7 @@ Get upload progress:
 		onprogress:function(per){
 			console.log(per);
 		},
-		serialize:c("#form")
+		serialize:$("#form")
 	});
 	```
 	
