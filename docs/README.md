@@ -1,3 +1,9 @@
+
+
+# [CrowJS - API Documentation](https://shadowz3n.github.io/CrowJS/)
+
+External URL: https://cdn.rawgit.com/Shadowz3n/CrowJS/master/crow.js
+
 # CrowJS
 
 this Javascript lib is based on jQuery, Zepto, VueJS.
@@ -6,14 +12,17 @@ weighing much less and with much more performance
 
 # Selector
 	```
-	c("body");
-	c(".class");
-	c("#id");
-	c(".class, .other_class, #id");
+	$("body");
+	$(".class");
+	$("#id");
+	$(".class, .other_class, #id");
+	$("<div>teste</div>");
 	
 	or create some elements:
 	
-	c("<div>teste</div>");
+	$({});
+	$(new Image());
+	$(new Object());
 	```
 
 
@@ -23,19 +32,19 @@ weighing much less and with much more performance
 Add Class:
 
 	```
-	c("body").addClass("test");
+	$("body").addClass("test");
 	```
 
 Remove Class:
 
 	```
-	c("body").removeClass("test");
+	$("body").removeClass("test");
 	```
 
 Toggle Class:
 
 	```
-	c("body").toggleClass("test");
+	$("body").toggleClass("test");
 	```
 
 
@@ -46,7 +55,7 @@ Toggle Class:
 	```
 
 	```
-	c("body").click(function(e){
+	$("body").click(function(e){
 		console.log(e);
 		console.log(this);
 	});
@@ -59,54 +68,54 @@ Toggle Class:
 Change some HTML:
 
 	```
-	c("body").html("test");
+	$("body").html("test");
 	```
  
 Getting contents:
 
 	```
-	console.log(c("body").html());
+	console.log($("body").html());
 	```
   
 Append some HTML:
 
 	```
-	c("body").append('<div>test</div>');
+	$("body").append('<div>test</div>');
 	or
 	var newDiv = c('<div></div>');
-	c("body").append(newDiv);
+	$("body").append(newDiv);
 	```
   
 Prepend some HTML:
 
 	```
-	c("body").prepend('<div>test</div>');
+	$("body").prepend('<div>test</div>');
 	or
 	var newDiv = c('<div></div>');
-	c("body").prepend(newDiv);
+	$("body").prepend(newDiv);
 	```
 	
 Append after some HTML:
 
 	```
-	c("body").after('<div>test</div>');
+	$("body").after('<div>test</div>');
 	or
 	var newDiv = c('<div></div>');
-	c("body").after(newDiv);
+	$("body").after(newDiv);
 	```
 	
 Append before some HTML:
 
 	```
-	c("body").before('<div>test</div>');
+	$("body").before('<div>test</div>');
 	or
 	var newDiv = c('<div></div>');
-	c("body").before(newDiv);
+	$("body").before(newDiv);
 	
 Remove element(s):
 
 	```
-	c("div").remove();
+	$("div").remove();
 	```
 
 
@@ -116,7 +125,7 @@ Remove element(s):
 Change an attribute(s):
 
 	```
-	c("body").attr({'data-attr1':'test', 'data-attr2':'test2'});
+	$("body").attr({'data-attr1':'test', 'data-attr2':'test2'});
 	```
 	
 Find something:
@@ -127,41 +136,41 @@ Find something:
 Get closest content:
 
 	```
-	c("div").closest(".class");
+	$("div").closest(".class");
 	```
 	
 Get element by index:
 
 	```
-	c("div").eq(0);
+	$("div").eq(0);
 	```
 	
 Get element(s) position(s):
 
 	```
-	console.log(c("div").position());
+	console.log($("div").position());
 	```
 	
 Get or change element(s) width(s):
 
 	```
-	console.log(c("div").width());
+	console.log($("div").width());
 	and 
-	c("div").width(300);
+	$("div").width(300);
 	```
 	
 Get or change element(s) height(s):
 
 	```
-	console.log(c("div").height());
+	console.log($("div").height());
 	and 
-	c("div").height(300);
+	$("div").height(300);
 	```
 	
 Get input value:
 
 	```
-	console.log(c("input").val());
+	console.log($("input").val());
 	```
  
  
@@ -171,37 +180,37 @@ Get input value:
 Manipulate css:
 
 	```
-	c("body").css({'margin-top':'20px', 'margin-left':'20px'});
+	$("body").css({'margin-top':'20px', 'margin-left':'20px'});
 	```
 
 Animation "animate(css, time, transition, function)":
 
 	```
-	c("body").animate({'margin-top':'20px', 'margin-left':'20px'}, 300, "ease", func);
+	$("body").animate({'margin-top':'20px', 'margin-left':'20px'}, 300, "ease", func);
 	```
 
 Fade In "fadeIn(time, function)":
 
 	```
-	c("div").fadeIn(300, func);
+	$("div").fadeIn(300, func);
 	```
 	
 Fade Out "fadeOut(time, function)":
 
 	```
-	c("div").fadeOut(300, func);
+	$("div").fadeOut(300, func);
 	```
 	
 Show something:
 
 	```
-	c("div").show();
+	$("div").show();
 	```
 
 Hide something:
 
 	```
-	c("div").hide();
+	$("div").hide();
 	```
 	
 	
@@ -223,7 +232,7 @@ Parameters:
 Serialize all form:
 
 	```
-	c.ajax({
+	$.ajax({
 		serialize:c("#form")
 	});
 	```
@@ -231,7 +240,7 @@ Serialize all form:
 Get upload progress:
 
 	```
-	c.ajax({
+	$.ajax({
 		onprogress:function(per){
 			console.log(per);
 		},
@@ -242,7 +251,7 @@ Get upload progress:
 Send post:
 
 	```
-	c.ajax({
+	$.ajax({
 		type:"POST",
 		data:{name:"Henrique", lastname:"Bissoli"}
 	});
@@ -251,7 +260,7 @@ Send post:
 Send get:
 
 	```
-	c.ajax({
+	$.ajax({
 		url:document.location.href
 	});
 	```
@@ -259,7 +268,7 @@ Send get:
 On Ajax done:
 
 	```
-	c.ajax({
+	$.ajax({
 		url:document.location.href
 	}).done(function(data){
 		console.log(data);
@@ -269,9 +278,9 @@ On Ajax done:
 Change Ajax headers:
 
 	```
-	c("#this_form").submit(function(e){
+	$("#this_form").submit(function(e){
 	    e.preventDefault();
-	    c.ajax({
+	    $.ajax({
 	    	headers:{'header1':'test', 'header2':'test2'}
 	    });
 	});
