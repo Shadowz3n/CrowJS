@@ -6,79 +6,63 @@
 			addClass: function(class_){
 				var toAdd   = class_.split(" ");
 				for(var i=0;i<toAdd.length;i++){
-					[].forEach.call(this, function(item){
-						if(item.className.indexOf(toAdd[i])== -1) item.className = (item.className+" "+toAdd[i]).replace(/^\s+|\s+$/g,'');
-					});
+					for(var j=0;j<this.length;j++) if(this[j].className.indexOf(toAdd[i])== -1) this[j].className = (this[j].className+" "+toAdd[i]).replace(/^\s+|\s+$/g,'');
 				}
 				return this;
 			},
 			toggleClass: function(class_){
 				var toToggle	= class_.split(" ");
 				for(var i=0;i<toToggle.length;i++){
-					[].forEach.call(this, function(item){
-						item.className = item.className.match(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'))? item.className.replace(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'), ''):item.className+" "+toToggle[i];
-					});
+					for(var j=0;j<this.length;j++) this[j].className = this[j].className.match(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'))? this[j].className.replace(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'), ''):this[j].className+" "+toToggle[i];
 				}
 				return this;
 			},
 			hasClass: function(class_){
 				var hasClass = class_.split(" "), hasClassVal = false;
 				for(var i=0;i<hasClass.length;i++){
-					[].forEach.call(this, function(item){
-						hasClassVal	= item.className.match(new RegExp('(\\s|^)'+hasClass[i]+'(\\s|$)'))? true:hasClassVal;
-					});
+					for(var j=0;j<this.length;j++) hasClassVal	= this[j].className.match(new RegExp('(\\s|^)'+hasClass[i]+'(\\s|$)'))? true:hasClassVal;
 				}
 				return hasClassVal;
 			},
 			removeClass: function(class_){
 				var toRm	= class_.split(" ");
 				for(var i=0;i<toRm.length;i++){
-					[].forEach.call(this, function(item){
-						if(item.className.match(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'))) item.className = item.className.replace(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'), '');
-					});
+					for(var j=0;j<this.length;j++) if(this[j].className.match(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'))) this[j].className = this[j].className.replace(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'), '');
 				}
 				return this;
 			},
 			html: function(html){
 				var thisHtml	= '';
-				[].forEach.call(this, function(item){ if(html) item.innerHTML = html; });
+				if(html) for(var j=0;j<this.length;j++) this[j].innerHTML = html;
 				return html? this:this[this.length-1].innerHTML;
 			},
 			css: function(style){
-				[].forEach.call(this, function(item){
-					for(var i in style){ item.style[i]  = style[i]; }
-				});
+				for(var j=0;j<this.length;j++){
+					for(var i in style){ this[j].style[i]  = style[i]; }
+				}
 				return this;
 			},
 			append: function(html){
 				if(html){
-					[].forEach.call(this, function(item){
-						(html instanceof Object)? [].forEach.call(html, function(item_){ item.appendChild(item_); }):item.appendChild(Crow.createElementFromString(html));
-					});
+					for(var j=0;j<this.length;j++) (html instanceof Object)? ()() [].forEach.call(html, function(item_){ this[j].appendChild(item_); }):this[j].appendChild(Crow.createElementFromString(html));
 				}
 				return this;
 			},
 			prepend: function(html){
 				if(html){
-					[].forEach.call(this, function(item){
-						(html instanceof Object)? [].forEach.call(html, function(item_){ item.insertBefore(item_, item.firstChild); }):item.insertBefore(Crow.createElementFromString(html), item.firstChild);
-					});
+					for(var j=0;j<this.length;j++) (html instanceof Object)? [].forEach.call(html, function(item_){ this[j].insertBefore(item_, this[j].firstChild); }):this[j].insertBefore(Crow.createElementFromString(html), this[j].firstChild);
 				}
 				return this;
 			},
 			after: function(html){
 				if(html){
-					[].forEach.call(this, function(item){
-						(html instanceof Object)? [].forEach.call(html, function(item_){ item.parentNode.insertBefore(item_, item.nextSibling); }):item.parentNode.insertBefore(Crow.createElementFromString(html), item.nextSibling);
-					});
+					for(var j=0;j<this.length;j++) (html instanceof Object)? [].forEach.call(html, function(item_){ this[j].parentNode.insertBefore(item_, this[j].nextSibling); }):this[j].parentNode.insertBefore(Crow.createElementFromString(html), this[j].nextSibling);
 				}
 				return this;
 			},
 			before: function(html){
 				if(html){
-					[].forEach.call(this, function(item){
-						(html instanceof Object)? [].forEach.call(html, function(item_){ item.parentNode.insertBefore(item_, item); }):item.parentNode.insertBefore(Crow.createElementFromString(html), item);
-					});
+					for(var j=0;j<this.length;j++) (html instanceof Object)? [].forEach.call(html, function(item_){ this[j].parentNode.insertBefore(item_, this[j]); }):this[j].parentNode.insertBefore(Crow.createElementFromString(html), this[j]);
 				}
 				return this;
 			},
@@ -92,21 +76,21 @@
 			},
 			find: function(selector){
 				var finds	= [];
-				[].forEach.call(this, function(item){ finds.push([].slice.call(item.querySelectorAll(selector))); });
+				for(var j=0;j<this.length;j++) finds.push([].slice.call(this[j].querySelectorAll(selector)));
 				return Crow(finds[0]);
 			},
 			closest: function(selector){
 				var closests	= [];
-				[].forEach.call(this, function(item){
-					(selector)? closests.push(item.closest(selector)):closests.push(item.parentNode);
-				});
+				for(var j=0;j<this.length;j++) (selector)? closests.push(this[j].closest(selector)):closests.push(this[j].parentNode);
 				return Crow(closests);
 			},
 			show: function(){
-				[].forEach.call(this, function(item){ item.style.display  = ""; }); return this;
+				for(var j=0;j<this.length;j++) this[j].style.display  = "";
+				return this;
 			},
 			hide: function(){
-				[].forEach.call(this, function(item){ item.style.display  = "none"; }); return this;
+				for(var j=0;j<this.length;j++) this[j].style.display  = "none";
+				return this;
 			},
 			eq: function(eq){
 				return (parseFloat(eq)>=0 || parseFloat(eq)<=this.length-1)? Crow([this[eq]]):this;
@@ -115,50 +99,49 @@
 				return {top:this[0].offsetTop, left:this[0].offsetLeft};
 			},
 			width: function(newW){
-				if(newW) [].forEach.call(this, function(item){ item.style.width  = newW; });
+				if(newW) for(var j=0;j<this.length;j++) this[j].style.width  = newW;
 				return newW? this:this[this.length-1].offsetWidth;
 			},
 			height: function(newH){
-				if(newH) [].forEach.call(this, function(item){ item.style.height  = newH; });
+				if(newH) for(var j=0;j<this.length;j++) this[j].style.height  = newH;
 				return newH? this:this[this.length-1].offsetHeight;
 			},
 			val: function(){
 				return this.value? this.value:null;
 			},
 			prop: function(prop){
-				if(prop) [].forEach.call(this, function(item){ if(item[prop]) return true; }); return false;
+				if(prop) for(var j=0;j<this.length;j++) if(this[j][prop]) return true;
+				return false;
 			},
 			load: function(func){
-				[].forEach.call(this, function(item){ this.addEventListener('DOMContentLoaded', func); });
+				for(var j=0;j<this.length;j++) this[j].addEventListener('DOMContentLoaded', func);
 			},
 			animate: function(style, time=300, transition="ease", func){
-				[].forEach.call(this, function(item){
-					item.style.transition = "all "+(Number.isInteger(time)? time:300)+"ms "+(typeof transition=="string"? transition:'ease');
-					setTimeout(function(){ for(var i in style){ item.style[i]   = style[i]; } });
-				});
+				for(var j=0;j<this.length;j++){
+					this[j].style.transition = "all "+(Number.isInteger(time)? time:300)+"ms "+(typeof transition=="string"? transition:'ease');
+					setTimeout(function(){ for(var i in style){ this[j].style[i]   = style[i]; } });
+				}
 				if(time instanceof Object) setTimeout(function(){ time(this); }, 300);
 				if(transition instanceof Object) setTimeout(function(){ transition(this); }, (Number.isInteger(time)? time:300));
 				if(func instanceof Object) setTimeout(function(){ func(this); }, (Number.isInteger(time)? time:300));
 				return this;
 			},
 			fadeIn: function(time=300, func){
-				[].forEach.call(this, function(item){
-					item.style.transition = "all "+time+"ms ease"; item.style.opacity = 1;
-				});
+				for(var j=0;j<this.length;j++){
+					this[j].style.transition = "all "+time+"ms ease"; this[j].style.opacity = 1;
+				}
 				if(func) setTimeout(function(){ return func(this); }, time);
 			},
 			fadeOut: function(time=300, func){
-				[].forEach.call(this, function(item){
-					item.style.transition = "all "+time+"ms ease"; item.style.opacity = 0;
-				});
+				for(var j=0;j<this.length;j++){
+					this[j].style.transition = "all "+time+"ms ease"; this[j].style.opacity = 0;
+				}
 				if(func) setTimeout(function(){ return func(this); }, time);
 			}
 		};
 		['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'mousemove', 'click', 'submit'].forEach(function(action){
 			crow.__proto__[action] = function(func){
-				[].forEach.call(this, function(item){
-					(func)? item.addEventListener(action, func, false):item[action]();
-				});
+				for(var j=0;j<this.length;j++) (func)? this[j].addEventListener(action, func, false):this[j][action]();
 				return this;
 			}
 		});
