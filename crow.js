@@ -6,34 +6,44 @@
 			addClass: function(class_){
 				var toAdd   = class_.split(" ");
 				for(var i=0;i<toAdd.length;i++){
-					for(var j=0;j<this.length;j++) if(this[j].className.indexOf(toAdd[i])== -1) this[j].className = (this[j].className+" "+toAdd[i]).replace(/^\s+|\s+$/g,'');
+					for(var j=0;j<this.length;j++){
+						if(this[j].className.indexOf(toAdd[i])== -1) this[j].className = (this[j].className+" "+toAdd[i]).replace(/^\s+|\s+$/g,'');
+					}
 				}
 				return this;
 			},
 			toggleClass: function(class_){
 				var toToggle	= class_.split(" ");
 				for(var i=0;i<toToggle.length;i++){
-					for(var j=0;j<this.length;j++) this[j].className = this[j].className.match(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'))? this[j].className.replace(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'), ''):this[j].className+" "+toToggle[i];
+					for(var j=0;j<this.length;j++){
+						this[j].className = this[j].className.match(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'))? this[j].className.replace(new RegExp('(\\s|^)'+toToggle[i]+'(\\s|$)'), ''):this[j].className+" "+toToggle[i];
+					}
 				}
 				return this;
 			},
 			hasClass: function(class_){
 				var hasClass = class_.split(" "), hasClassVal = false;
 				for(var i=0;i<hasClass.length;i++){
-					for(var j=0;j<this.length;j++) hasClassVal	= this[j].className.match(new RegExp('(\\s|^)'+hasClass[i]+'(\\s|$)'))? true:hasClassVal;
+					for(var j=0;j<this.length;j++){
+						hasClassVal	= this[j].className.match(new RegExp('(\\s|^)'+hasClass[i]+'(\\s|$)'))? true:hasClassVal;
+					}
 				}
 				return hasClassVal;
 			},
 			removeClass: function(class_){
 				var toRm	= class_.split(" ");
 				for(var i=0;i<toRm.length;i++){
-					for(var j=0;j<this.length;j++) if(this[j].className.match(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'))) this[j].className = this[j].className.replace(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'), '');
+					for(var j=0;j<this.length;j++){
+						if(this[j].className.match(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'))) this[j].className = this[j].className.replace(new RegExp('(\\s|^)'+toRm[i]+'(\\s|$)'), '');
+					}
 				}
 				return this;
 			},
 			html: function(html){
 				var thisHtml	= '';
-				if(html) for(var j=0;j<this.length;j++) this[j].innerHTML = html;
+				if(html) for(var j=0;j<this.length;j++){
+					this[j].innerHTML = html;
+				}
 				return html? this:this[this.length-1].innerHTML;
 			},
 			css: function(style){
@@ -44,25 +54,33 @@
 			},
 			append: function(html){
 				if(html){
-					for(var j=0;j<this.length;j++) (html instanceof Object)? ()() [].forEach.call(html, function(item_){ this[j].appendChild(item_); }):this[j].appendChild(Crow.createElementFromString(html));
+					for(var j=0;j<this.length;j++){
+						(html instanceof Object)? [].forEach.call(html, function(item_){ this[j].appendChild(item_); }):this[j].appendChild(Crow.createElementFromString(html));
+					}
 				}
 				return this;
 			},
 			prepend: function(html){
 				if(html){
-					for(var j=0;j<this.length;j++) (html instanceof Object)? [].forEach.call(html, function(item_){ this[j].insertBefore(item_, this[j].firstChild); }):this[j].insertBefore(Crow.createElementFromString(html), this[j].firstChild);
+					for(var j=0;j<this.length;j++){
+						(html instanceof Object)? [].forEach.call(html, function(item_){ this[j].insertBefore(item_, this[j].firstChild); }):this[j].insertBefore(Crow.createElementFromString(html), this[j].firstChild);
+					}
 				}
 				return this;
 			},
 			after: function(html){
 				if(html){
-					for(var j=0;j<this.length;j++) (html instanceof Object)? [].forEach.call(html, function(item_){ this[j].parentNode.insertBefore(item_, this[j].nextSibling); }):this[j].parentNode.insertBefore(Crow.createElementFromString(html), this[j].nextSibling);
+					for(var j=0;j<this.length;j++){
+						(html instanceof Object)? [].forEach.call(html, function(item_){ this[j].parentNode.insertBefore(item_, this[j].nextSibling); }):this[j].parentNode.insertBefore(Crow.createElementFromString(html), this[j].nextSibling);
+					}
 				}
 				return this;
 			},
 			before: function(html){
 				if(html){
-					for(var j=0;j<this.length;j++) (html instanceof Object)? [].forEach.call(html, function(item_){ this[j].parentNode.insertBefore(item_, this[j]); }):this[j].parentNode.insertBefore(Crow.createElementFromString(html), this[j]);
+					for(var j=0;j<this.length;j++){
+						(html instanceof Object)? [].forEach.call(html, function(item_){ this[j].parentNode.insertBefore(item_, this[j]); }):this[j].parentNode.insertBefore(Crow.createElementFromString(html), this[j]);
+					}
 				}
 				return this;
 			},
@@ -76,20 +94,22 @@
 			},
 			find: function(selector){
 				var finds	= [];
-				for(var j=0;j<this.length;j++) finds.push([].slice.call(this[j].querySelectorAll(selector)));
+				for(var j=0;j<this.length;j++){ finds.push([].slice.call(this[j].querySelectorAll(selector))); }
 				return Crow(finds[0]);
 			},
 			closest: function(selector){
 				var closests	= [];
-				for(var j=0;j<this.length;j++) (selector)? closests.push(this[j].closest(selector)):closests.push(this[j].parentNode);
+				for(var j=0;j<this.length;j++){
+					(selector)? closests.push(this[j].closest(selector)):closests.push(this[j].parentNode);
+				}
 				return Crow(closests);
 			},
 			show: function(){
-				for(var j=0;j<this.length;j++) this[j].style.display  = "";
+				for(var j=0;j<this.length;j++){ this[j].style.display  = ""; }
 				return this;
 			},
 			hide: function(){
-				for(var j=0;j<this.length;j++) this[j].style.display  = "none";
+				for(var j=0;j<this.length;j++){ this[j].style.display  = "none"; }
 				return this;
 			},
 			eq: function(eq){
@@ -99,22 +119,30 @@
 				return {top:this[0].offsetTop, left:this[0].offsetLeft};
 			},
 			width: function(newW){
-				if(newW) for(var j=0;j<this.length;j++) this[j].style.width  = newW;
+				if(newW){
+					for(var j=0;j<this.length;j++){ this[j].style.width  = newW; }
+				}
 				return newW? this:this[this.length-1].offsetWidth;
 			},
 			height: function(newH){
-				if(newH) for(var j=0;j<this.length;j++) this[j].style.height  = newH;
+				if(newH){
+					for(var j=0;j<this.length;j++){ this[j].style.height  = newH; }
+				}
 				return newH? this:this[this.length-1].offsetHeight;
 			},
 			val: function(){
 				return this.value? this.value:null;
 			},
 			prop: function(prop){
-				if(prop) for(var j=0;j<this.length;j++) if(this[j][prop]) return true;
+				if(prop){
+					for(var j=0;j<this.length;j++){
+						if(this[j][prop]) return true;
+					}
+				}
 				return false;
 			},
 			load: function(func){
-				for(var j=0;j<this.length;j++) this[j].addEventListener('DOMContentLoaded', func);
+				for(var j=0;j<this.length;j++){ this[j].addEventListener('DOMContentLoaded', func); }
 			},
 			animate: function(style, time=300, transition="ease", func){
 				for(var j=0;j<this.length;j++){
@@ -141,7 +169,9 @@
 		};
 		['focus', 'blur', 'keydown', 'keypress', 'keyup', 'mouseover', 'mouseout', 'mousemove', 'click', 'submit'].forEach(function(action){
 			crow.__proto__[action] = function(func){
-				for(var j=0;j<this.length;j++) (func)? this[j].addEventListener(action, func, false):this[j][action]();
+				for(var j=0;j<this.length;j++){
+					(func)? this[j].addEventListener(action, func, false):this[j][action]();
+				}
 				return this;
 			}
 		});
