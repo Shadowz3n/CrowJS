@@ -177,6 +177,25 @@
 		});
 		return crow;
 	});
+	Crow.cookie	= function(name){
+		if(!name) return document.cookie;
+		var nameEQ = name+"=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i<ca.length;i++){
+			var c = ca[i];
+			while(c.charAt(0)==' ') c = c.substring(1,c.length);
+			if(c.indexOf(nameEQ)==0) return c.substring(nameEQ.length,c.length);
+		}
+		return null;
+	}
+	Crow.cookie.set	= function(name,value,expiredays){
+		var exdate	= new Date();
+		exdate.setDate(exdate.getDate()+expiredays);
+		document.cookie =name+"="+escape(value)+((expiredays==null)? "":";expires="+exdate.toGMTString());
+	}
+	Crow.cookie.del	= function(name,path,domain){
+		if(name) document.cookie = name+"="+((path)? ";path="+path:"")+((domain)?";domain="+domain:"")+";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+	}
 	Crow.ready = function(callback){
 		document.addEventListener("DOMContentLoaded", callback(Crow.ready));
 	}
