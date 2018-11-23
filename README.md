@@ -11,7 +11,7 @@ weighing much less and with much more performance
 
 
 # Selector
-	```
+	```javascript
 	$("body");
 	$(".class");
 	$("#id");
@@ -31,30 +31,30 @@ weighing much less and with much more performance
 
 Add Class:
 
-	```
+	```javascript
 	$("body").addClass("test");
 	```
 
 Remove Class:
 
-	```
+	```javascript
 	$("body").removeClass("test");
 	```
 
 Toggle Class:
 
-	```
+	```javascript
 	$("body").toggleClass("test");
 	```
 
 
 # Actions
-	```
+	```javascript
 		Actions:
 			focus, blur, keydown, keypress, keyup, mouseover, mouseout, mousemove, click, submit
 	```
 
-	```
+	```javascript
 	$("body").click(function(e){
 		console.log(e);
 		console.log(this);
@@ -67,19 +67,19 @@ Toggle Class:
 
 Change some HTML:
 
-	```
+	```javascript
 	$("body").html("test");
 	```
  
 Getting contents:
 
-	```
+	```javascript
 	console.log($("body").html());
 	```
   
 Append some HTML:
 
-	```
+	```javascript
 	$("body").append('<div>test</div>');
 	or
 	var newDiv = $('<div></div>');
@@ -88,7 +88,7 @@ Append some HTML:
   
 Prepend some HTML:
 
-	```
+	```javascript
 	$("body").prepend('<div>test</div>');
 	or
 	var newDiv = $('<div></div>');
@@ -97,7 +97,7 @@ Prepend some HTML:
 	
 Append after some HTML:
 
-	```
+	```javascript
 	$("body").after('<div>test</div>');
 	or
 	var newDiv = $('<div></div>');
@@ -106,7 +106,7 @@ Append after some HTML:
 	
 Append before some HTML:
 
-	```
+	```javascript
 	$("body").before('<div>test</div>');
 	or
 	var newDiv = $('<div></div>');
@@ -114,7 +114,7 @@ Append before some HTML:
 	
 Remove element(s):
 
-	```
+	```javascript
 	$("div").remove();
 	```
 
@@ -124,36 +124,36 @@ Remove element(s):
 	
 Change an attribute(s):
 
-	```
+	```javascript
 	$("body").attr({'data-attr1':'test', 'data-attr2':'test2'});
 	```
 	
 Find something:
 
-	```
+	```javascript
 	$("body").find(".class");
 	```
 Get closest content:
 
-	```
+	```javascript
 	$("div").closest(".class");
 	```
 	
 Get element by index:
 
-	```
+	```javascript
 	$("div").eq(0);
 	```
 	
 Get element(s) position(s):
 
-	```
+	```javascript
 	console.log($("div").position());
 	```
 	
 Get or change element(s) width(s):
 
-	```
+	```javascript
 	console.log($("div").width());
 	and 
 	$("div").width(300);
@@ -161,15 +161,19 @@ Get or change element(s) width(s):
 	
 Get or change element(s) height(s):
 
-	```
+	```javascript
 	console.log($("div").height());
+	```
+	
 	and 
+	
+	```javascript
 	$("div").height(300);
 	```
 	
 Get input value:
 
-	```
+	```javascript
 	console.log($("input").val());
 	```
  
@@ -179,37 +183,37 @@ Get input value:
  
 Manipulate css:
 
-	```
+	```javascript
 	$("body").css({'margin-top':'20px', 'margin-left':'20px'});
 	```
 
 Animation "animate(css, time, transition, function)":
 
-	```
+	```javascript
 	$("body").animate({'margin-top':'20px', 'margin-left':'20px'}, 300, "ease", func);
 	```
 
 Fade In "fadeIn(time, function)":
 
-	```
+	```javascript
 	$("div").fadeIn(300, func);
 	```
 	
 Fade Out "fadeOut(time, function)":
 
-	```
+	```javascript
 	$("div").fadeOut(300, func);
 	```
 	
 Show something:
 
-	```
+	```javascript
 	$("div").show();
 	```
 
 Hide something:
 
-	```
+	```javascript
 	$("div").hide();
 	```
 	
@@ -219,7 +223,7 @@ Hide something:
 
 Parameters:
 
-	```
+	```javascript
 		url: "default: document.location.href"
 		type: "default: GET"
 		data: "default: undefined"
@@ -231,7 +235,7 @@ Parameters:
 
 Serialize all form:
 
-	```
+	```javascript
 	$.ajax({
 		serialize:$("#form")
 	});
@@ -239,7 +243,7 @@ Serialize all form:
 	
 Get upload progress:
 
-	```
+	```javascript
 	$.ajax({
 		onprogress:function(per){
 			console.log(per);
@@ -250,7 +254,7 @@ Get upload progress:
 	
 Send post:
 
-	```
+	```javascript
 	$.ajax({
 		type:"POST",
 		data:{name:"Henrique", lastname:"Bissoli"}
@@ -259,7 +263,7 @@ Send post:
 	
 Send get:
 
-	```
+	```javascript
 	$.ajax({
 		url:document.location.href
 	});
@@ -267,7 +271,7 @@ Send get:
 	
 On Ajax done:
 
-	```
+	```javascript
 	$.ajax({
 		url:document.location.href
 	}).done(function(data){
@@ -277,7 +281,7 @@ On Ajax done:
 	
 Change Ajax headers:
 
-	```
+	```javascript
 	$("#this_form").submit(function(e){
 	    e.preventDefault();
 	    $.ajax({
