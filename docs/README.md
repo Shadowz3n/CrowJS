@@ -1,6 +1,6 @@
 
 
-External URL: https://cdn.rawgit.com/Shadowz3n/CrowJS/master/crow.js
+External URL: https://cdn.jsdelivr.net/gh/Shadowz3n/CrowJS@master/crow.js
 
 # CrowJS
 
